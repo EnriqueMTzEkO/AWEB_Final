@@ -7,7 +7,7 @@
  */
  import { TextFieldTypes } from '@ionic/core/components';
 
- export default interface IUserForm {
+ export interface IUserForm {
    key: number;
    state: string;
    labelText: string;
@@ -20,7 +20,7 @@
    required: boolean;
  };
  
- export default interface IUserAccessForm {
+ export interface IUserAccessForm {
    event: React.FormEventHandler<HTMLFormElement>;
    inputs: Array<IUserForm>;
    buttonLabel: string;

@@ -1,12 +1,25 @@
 import MoviePoster from "./MoviePoster";
+import MovieDescription from "../components/MovieDescription";
 import MovieList from "../data/MoviesList";
-import { IonPage, IonContent } from "@ionic/react";
+import {
+  IonPage,
+  IonContent,
+  IonGrid,
+  IonRow,
+  IonCol
+} from "@ionic/react";
 
 const Movies: React.FC = () => {
   return(
   <IonPage>
     <IonContent>
-      <MoviePoster {...MovieList} />
+      <IonGrid>
+        <IonRow>
+          <IonCol size="6">
+            Image
+          </IonCol>
+        </IonRow>
+      </IonGrid>
     </IonContent>
   </IonPage>
   );

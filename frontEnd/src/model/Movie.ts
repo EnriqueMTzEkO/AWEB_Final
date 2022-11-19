@@ -1,13 +1,29 @@
 /**
  * @fileoverview Sets Movie's fields.
  */
-
-import React from "react";
-
-export default interface IMovie {
-  id: string,
+export interface IPoster {
   alt: string;
-  src: number;
-  fail: number;
-  children?: React.ReactNode;
+  images: Array<string>;
+};
+
+export interface IDescription {
+  id: string;
+  description: string;
+  title: string;
+  year: number;
+  country: string;
+  subtitles: boolean;
+  starring: Array<string>;
+  director: string;
+  producer: string;
+  distributor: string;
+  rating: number;
+  length: number;
+  score: number;
+  genre: Array<string>;
+};
+
+export interface IMovie {
+  poster: IPoster;
+  info: IDescription;
 };

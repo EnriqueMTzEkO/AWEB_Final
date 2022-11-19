@@ -4,30 +4,29 @@ import {
   IonImg,
   IonItem
 } from '@ionic/react';
-import IMovie from "../model/Movie";
+import { IMoviePoster } from "../model/Movie";
 
 const chosenMovie = (key: number) => {};
-const handleImageError = (counter: number) => {
-  if (counter < 3) {
-    counter += 1;
-  } else {
-    return 'true shit';
-  }
+const handleImageError = (id: string) => {
+  const imageError = document.getElementById(id);
+  let src = imageError!.getAttribute("src");
+  const extension = ['avif', 'webp', 'jpeg'];
+  const newExt = extension.indexOf(src!.slice(-4));
+  
+  src = "".concat(src!.slice(0, -4), extension[newExt]);
+  imageError?.setAttribute('src', src);
 };
 
-const MoviePoster: React.FC<IMovie[]> = (props) => {
+const MoviePoster: React.FC<IMoviePoster[]> = (props) => {
   // Declares variables for poster location.
-  let posterId: number = 0;
-  let extension: [string, string, string] = ['avif', 'webp', 'jpeg'];
+  let posterId: number = -1;
   const data = Object.values(props);
-  console.log(data);
   
   return(
     <IonList>
-      <IonImg></IonImg>
       {data.map((value) => {
         const imgFolder: string =
-            `public/assets/img/${posterId}/poster.${extension[value.fail]}`;
+            `public/assets/img/${posterId}/poster.avif`;
         posterId = value.src;
         return(
         <IonItem key={value.id}>
@@ -37,7 +36,7 @@ const MoviePoster: React.FC<IMovie[]> = (props) => {
             src={imgFolder}
             alt={value.alt}
             onClick={() => chosenMovie(value.src)}
-            onError={() => handleImageError(value.fail)}
+            onError={() => handleImageError(value.id)}
           ></IonImg>
         </IonItem>
         );

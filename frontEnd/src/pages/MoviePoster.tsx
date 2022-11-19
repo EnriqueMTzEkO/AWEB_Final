@@ -2,8 +2,7 @@ import React from "react";
 import {
   IonList,
   IonImg,
-  IonItem,
-  IonText
+  IonItem
 } from '@ionic/react';
 import IMovie from "../model/Movie";
 
@@ -20,25 +19,29 @@ const MoviePoster: React.FC<IMovie[]> = (props) => {
   // Declares variables for poster location.
   let posterId: number = 0;
   let extension: [string, string, string] = ['avif', 'webp', 'jpeg'];
+  const data = Object.values(props);
+  console.log(data);
   
   return(
     <IonList>
-    <>
-    {Object.entries(props).forEach(([key,value], index) => {
-      const imgFolder: string =
-          `../../public/assets/img/${posterId}/poster.${extension[value.fail]}`;
-      posterId = value.src;
-      <IonItem key={value.id}>
-        <IonText>What the Hell</IonText>
-        <IonImg
-          src={imgFolder}
-          alt={value.alt}
-          onClick={() => chosenMovie(value.src)}
-          onError={() => handleImageError(value.fail)}
-        ></IonImg>
-      </IonItem>
-    })}
-    </>
+      <IonImg></IonImg>
+      {data.map((value) => {
+        const imgFolder: string =
+            `public/assets/img/${posterId}/poster.${extension[value.fail]}`;
+        posterId = value.src;
+        return(
+        <IonItem key={value.id}>
+          <IonImg
+            id={value.id}
+            className='movie-poster'
+            src={imgFolder}
+            alt={value.alt}
+            onClick={() => chosenMovie(value.src)}
+            onError={() => handleImageError(value.fail)}
+          ></IonImg>
+        </IonItem>
+        );
+      })}
     </IonList>
   );
 }

@@ -3,6 +3,7 @@ export interface ISeat {
   hall: number;
   row: number;
   slot: number;
+  status: [boolean, boolean];
 };
 
 export interface IShow {

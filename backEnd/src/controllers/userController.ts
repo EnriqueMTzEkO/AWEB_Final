@@ -6,13 +6,18 @@ const createUsers = async (req: Request, res: Response) => {
   const { username, password, email } = req.body;
 
   const USER_REGEX = /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+  const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{12,64}$/;
   const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-  if (USER_REGEX.test(username)) {
+  if (!USER_REGEX.test(username)) {
     return res.status(400).json({ message: 'Nombre de usuario inválido.' });
   };
 
-  if (EMAIL_REGEX.test(email)) {
+  if (!PASSWORD_REGEX.test(password)) {
+    return res.status(400).json({message: 'Password inválido.'});
+  }
+
+  if (!EMAIL_REGEX.test(email)) {
     return res.status(400).json({ message: 'Email inválido.' });
   };
   
@@ -36,15 +41,13 @@ const createUsers = async (req: Request, res: Response) => {
   const hash = await argon2.hash(password);
   
   const createUser = async () => {
-    const sql = 'CALL `sp_create_user`(?, ?, ?, ?)';
-    await connection.query(sql, [process.env.DB_CUSTOMER_AUTH_KEY, username, hash, email])
-      .then((res) => {
-        return Object.values(JSON.parse(JSON.stringify(res)));
-      });
+    const sql = `CALL sp_create_user(UNHEX(?), ?, ?, ?)`;
+    console.log(process.env.DB_CUSTOMER_AUTH_KEY, username, hash, email);
+    return await connection.query(sql, [process.env.DB_CUSTOMER_AUTH_KEY!, username, hash, email]);
   };
-  
-  const test = await createUser();
-  console.log(test);
+
+  createUser();
+  connection.end();
 
 };
 

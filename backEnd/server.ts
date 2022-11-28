@@ -12,7 +12,6 @@
  
  // Custom import
  import corsOptions from './src/config/corsOptions';
- import { ServerResponse } from 'http';
  
  // Declaración de variables
  const server = express();
@@ -23,5 +22,7 @@
  server.use(express.json());
  
  // Router
+server.use('/', require('./src/routes/root'));
+server.use('/user', require('./src/routes/userRoutes'));
  
  server.listen(PORT, () => console.log(`Server running on port ${PORT}.`));

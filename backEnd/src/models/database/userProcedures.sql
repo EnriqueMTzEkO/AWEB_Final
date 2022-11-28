@@ -1,11 +1,12 @@
 -- The key must be created before using this function.
 DROP FUNCTION IF EXISTS `auth_client`;
 DELIMITER //
-CREATE DEFINER='b8977KlEEZRy'@'localhost' FUNCTION `auth_client`(`key` BINARY(16))
+CREATE FUNCTION `auth_client`(`client_key` BINARY(16))
 RETURNS BOOLEAN
 DETERMINISTIC
 BEGIN
-	RETURN AES_DECRYPT(`key`, @user_key) = BINARY('Lo452VkDEfmqMRS');
+	SELECT UNHEX(SHA2(`key`,512)) INTO @temp FROM `keychain` WHERE `name` = 'user_key';
+	RETURN AES_DECRYPT(`client_key`, @temp) = BINARY('Lo452VkDEfmqMRS');
 END //
 DELIMITER ;
 
@@ -70,3 +71,5 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+
+CALL `sp_create_user`(0xc7487f380e204d0a47972b0d2f244cf7, 'tt', '$argon2i$v=19$m=16,t=2,p=1$bW16NE5QN3o5SkJ6Um1oYg$bVLca58VdA0ZZULo/66efw', 't@t.com');

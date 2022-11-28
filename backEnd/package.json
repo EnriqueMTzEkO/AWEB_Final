@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Back End para el proyecto final de la clase de aplicaciones Web Orientadas a Servicios.",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "nodemon server.ts",
     "test": "jest"
   },
   "author": "Mauricio López Cházaro",

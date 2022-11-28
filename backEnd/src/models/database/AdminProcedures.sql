@@ -19,3 +19,22 @@ BEGIN
 	SELECT * FROM `USERS`;
 END //
 DELIMITER ;
+
+
+-- Populate Shows
+DROP PROCEDURE IF EXISTS `sp_populate`;
+DELIMITER //
+CREATE PROCEDURE `sp_populate`()
+BEGIN
+	DECLARE days INT;
+    SET days = 0;
+    label1: LOOP
+		SET days = days + 1;
+        IF days < 14 THEN
+			INSERT INTO `showings` SELECT guuid(), DATE_ADD(`start`, INTERVAL days DAY), DATE_ADD(`end`, INTERVAL days DAY), `MV_id`, `hall` FROM showings WHERE DATE(`start`) IN (SELECT DATE(min(start)) FROM showings);
+            ITERATE label1;
+		END IF;
+        LEAVE label1;
+	END LOOP label1;
+END //
+DELIMITER ;

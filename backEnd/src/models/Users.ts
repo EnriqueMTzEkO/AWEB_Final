@@ -6,3 +6,9 @@ export interface IUsers {
   roles: string[];
   active: boolean;
 };
+
+export interface INewUser {
+  username: string;
+  password: string;
+  email: string;
+}

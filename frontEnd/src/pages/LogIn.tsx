@@ -48,11 +48,26 @@ const Login = () => {
         }
       );
       const accessToken = response?.data?.accessToken;
+      const role: boolean = response?.data?.role;
+      setAuth({ user, pwd, role, accessToken });
       setUser('');
       setPwd('');
       setSuccess(true);
     } catch (err) {
-
+      // @ts-ignore: Error is mysterious
+      if (!err?.response) {
+        setErrMsg('No server response');
+      // @ts-ignore: Error is mysterious
+      } else if (err.response?.status === 400) {
+        setErrMsg('Missing username or password.');
+      // @ts-ignore: Error is mysterious
+      } else if (err.response?.status === 401) {
+        setErrMsg('Unauthorized.');
+      } else {
+        setErrMsg('Login failed.');
+      }
+      // @ts-ignore: Typescript hates blind people
+      errRef.current.focus();
     }
   }
 

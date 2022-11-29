@@ -4,10 +4,6 @@ import conn from '../config/Connector';
 
 const createUsers = async (req: Request, res: Response) => {
   const { username, password, email } = req.body;
-  console.log(req.body);
-  console.log(username);
-  console.log(password);
-  console.log(email);
   
   const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,15}$/;
   const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{7,63}$/;
@@ -67,9 +63,14 @@ const deleteUsers = () => {
 
 };
 
+const login = () => {
+
+};
+
 export default {
   createUsers,
   getUsers,
   updateUsers,
-  deleteUsers
+  deleteUsers,
+  login
 };

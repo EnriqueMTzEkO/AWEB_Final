@@ -4,8 +4,8 @@ import {
   IonImg,
   IonItem
 } from '@ionic/react';
-import { IMoviePoster } from "../model/Movie";
-
+import { IPoster } from "../model/Movie";
+/*
 const chosenMovie = (key: number) => {};
 const handleImageError = (id: string) => {
   const imageError = document.getElementById(id);
@@ -17,7 +17,7 @@ const handleImageError = (id: string) => {
   imageError?.setAttribute('src', src);
 };
 
-const MoviePoster: React.FC<IMoviePoster[]> = (props) => {
+const MoviePoster: React.FC<IPoster[]> = (props) => {
   // Declares variables for poster location.
   let posterId: number = -1;
   const data = Object.values(props);
@@ -47,3 +47,4 @@ const MoviePoster: React.FC<IMoviePoster[]> = (props) => {
   
 
 export default MoviePoster;
+*/

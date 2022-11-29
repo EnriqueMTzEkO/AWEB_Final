@@ -4,9 +4,13 @@ import conn from '../config/Connector';
 
 const createUsers = async (req: Request, res: Response) => {
   const { username, password, email } = req.body;
-
-  const USER_REGEX = /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
-  const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{12,64}$/;
+  console.log(req.body);
+  console.log(username);
+  console.log(password);
+  console.log(email);
+  
+  const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,15}$/;
+  const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{7,63}$/;
   const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
   if (!USER_REGEX.test(username)) {

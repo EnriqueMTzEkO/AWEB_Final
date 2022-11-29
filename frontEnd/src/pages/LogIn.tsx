@@ -10,36 +10,21 @@ import {
   IonCardSubtitle,
   IonButton
 } from '@ionic/react';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
+import AuthContext from '../context/authProvider';
 import { Link } from 'react-router-dom';
 import axios from '../api/axios';
 
-const USER_REGEX = /^(?=[a-zA-Z0-9._]{4,16}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%])$/;
-const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const LOGIN_URL = '/auth';
 
-const REGISTER_URL = '/register';
-
-const Register = () => {
+const Login = () => {
+  // @ts-ignore: idk
+  const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
   const [user, setUser] = useState('');
-  const [validName, setValidName] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
-
   const [pwd, setPwd] = useState('');
-  const [validPwd, setValidPwd] = useState(false);
-  const [pwdFocus, setPwdFocus] = useState(false);
-
-  const [matchPwd, setMatchPwd] = useState('');
-  const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
-
-  const [email, setEmail] = useState('');
-  const [validEmail, setValidEmail] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false);
-
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
@@ -49,52 +34,32 @@ const Register = () => {
   }, []);
 
   useEffect(() => {
-    setValidName(USER_REGEX.test(user));
-  }, [user]);
-
-  useEffect(() => {
-    setValidPwd(PASSWORD_REGEX.test(pwd));
-    const match = pwd === matchPwd;
-    setValidMatch(match);
-  }, [pwd, matchPwd]);
-
-  useEffect(() => {
-    setValidEmail(EMAIL_REGEX.test(email));
-  }, [email]);
-
-  useEffect(() => {
     setErrMsg('');
-  }, [user,pwd,matchPwd]);
+  }, [user,pwd]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    try{
-      const response = await axios.post(REGISTER_URL,
-        JSON.stringify({ username: user, password: pwd, email}),
+    try {
+      const response = await axios.post(LOGIN_URL,
+        JSON.stringify({ username: user, password: pwd }),
         {
           headers: { 'Content-type': 'application/json'},
           withCredentials: true
         }
       );
-      console.log(response.data);
+      const accessToken = response?.data?.accessToken;
+      setUser('');
+      setPwd('');
       setSuccess(true);
-    } catch (err: any) {
-      if (!err?.response) {
-        setErrMsg('No server response');
-      } else if (err.response?.status === 409) {
-        setErrMsg('Username taken.');
-      } else {
-        setErrMsg('Registration failed.');
-      }
-      // @ts-ignore: Can't fix don't care
-      errRef.current.focus();
+    } catch (err) {
+
     }
   }
 
   return(
     <IonCard>
       <IonCardHeader>
-        <IonCardTitle>Registrarse</IonCardTitle>
+        <IonCardTitle>Acceder</IonCardTitle>
         <IonCardSubtitle>
           <p
           // @ts-ignore: Fuck off
@@ -109,8 +74,6 @@ const Register = () => {
           <IonItem>
             <IonLabel position="floating">
               Nombre de Usuario:
-              <span className={validName ? "valid" : "hide"}></span>
-              <span className={validName || !user ? "hide" : "invalid"}></span>
             </IonLabel>
             <IonInput
             type="text"
@@ -119,87 +82,26 @@ const Register = () => {
             ref={userRef}
             autoComplete="off"
             onChange={(e) => setUser((e.target as HTMLInputElement)!.value) }
+            value={user}
             required
-            aria-invalid={validName ? "false" : "true"}
-            aria-described-by="uidnote"
-            onFocus={() => setUserFocus(true)}
-            onBlur={() => setUserFocus(false)}
             ></IonInput>
-            <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
-              4 a 16 caracteres.<br />
-              Debe empezar con letra. <br />
-              Permite Letras, números, guión bajo y guiones.
-            </p>
-          </IonItem>
-          <IonItem>
-            <IonLabel position="floating">
-              Email:
-              <span className={validEmail ? "valid" : "hide"}></span>
-              <span className={validEmail || !email ? "hide" : "invalid"}></span>
-            </IonLabel>
-            <IonInput
-            type="email"
-            id="login-email"
-            onChange={(e) => setEmail((e.target as HTMLInputElement)!.value) }
-            required
-            aria-invalid={validEmail ? "false" : "true"}
-            aria-described-by="emlnote"
-            onFocus={() => setEmailFocus(true)}
-            onBlur={() => setEmailFocus(false)}
-            ></IonInput>
-            <p id="emlnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
-              Al menos un caracter antes de un @.<br />
-              Debe empezar con letra. <br />
-              Debe contener 1 punto y 2 caracteres más.
-            </p>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">
               Password:
-              <span className={validPwd ? "valid" : "hide"}></span>
-              <span className={validPwd || !pwd ? "hide" : "invalid"}></span>
             </IonLabel>
             <IonInput
             type="password"
             id="login-password"
             onChange={(e) => setPwd((e.target as HTMLInputElement)!.value) }
+            value={pwd}
             required
-            aria-invalid={validPwd ? "false" : "true"}
-            aria-described-by="pwdnote"
-            onFocus={() => setPwdFocus(true)}
-            onBlur={() => setPwdFocus(false)}
             ></IonInput>
-            <p id="pwdnote" className={pwdFocus && pwd && !validPwd ? "instructions" : "offscreen"}>
-              8 a 64 caracteres.<br />
-              Debe contener 1 mayúscula y 1 minúscula.<br />
-              Debe contener al menos un caracter especial como !@#$%.
-            </p>
-          </IonItem>
-          <IonItem>
-            <IonLabel position="floating">
-              Confirme el password:
-              <span className={validMatch && matchPwd ? "valid" : "hide"}></span>
-              <span className={validMatch || !matchPwd ? "hide" : "invalid"}></span>
-            </IonLabel>
-            <IonInput
-            type="password"
-            id="login-confirm"
-            onChange={(e) => setMatchPwd((e.target as HTMLInputElement)!.value) }
-            required
-            aria-invalid={validMatch ? "false" : "true"}
-            aria-described-by="confirmnote"
-            onFocus={() => setMatchFocus(true)}
-            onBlur={() => setMatchFocus(false)}
-            ></IonInput>
-            <p id="confirmnote" className={matchFocus && !validMatch && !validPwd ? "instructions" : "offscreen"}>
-              Debe corresponder con el password.
-            </p>
           </IonItem>
           <IonItem>
             <IonButton
-            type="submit"
-            disabled={!validName || !validPwd || !validMatch ? true : false}>
-              Registrarse
+            type="submit">
+              Acceder
             </IonButton>
           </IonItem>
           <IonItem>
@@ -209,8 +111,8 @@ const Register = () => {
             </IonButton>
           </IonItem>
           <IonItem>
-            <p>¿Ya tiene cuenta?</p>
-            <Link href="">Acceder</Link>
+            <p>¿Necesita una cuenta?</p>
+            <Link to="/register">Inscribirse</Link>
           </IonItem>
         </IonList>
         </form>
@@ -219,4 +121,4 @@ const Register = () => {
   );
 };
 
-export default LogIn;
+export default Login;

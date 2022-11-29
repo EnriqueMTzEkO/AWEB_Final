@@ -1,6 +1,3 @@
-import MoviePoster from "./MoviePoster";
-import MovieDescription from "../components/MovieDescription";
-import MovieList from "../data/MoviesList";
 import {
   IonPage,
   IonContent,

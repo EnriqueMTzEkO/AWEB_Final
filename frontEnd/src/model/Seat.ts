@@ -1,8 +1,5 @@
 export interface ISeat {
   id: string;
-  hall: number;
-  row: number;
-  slot: number;
   status: [boolean, boolean];
 };
 

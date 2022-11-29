@@ -1,44 +1,17 @@
-import React from 'react';
-import {
-  IonImg
-} from '@ionic/react';
-import { IHall, ISeat } from '../model/Seat';
+import { IonCol, IonIcon } from "@ionic/react";
+import { ISeat } from '../model/Seat';
 
-const Seat: React.FC<IHall> = (hall) => {
-  const rawData: Array<ISeat> = Object.values(hall.shows[0].seats);
-  const seats: Array<Array<ISeat>> = [[], [], [], [], [], [], [], []];
-
-  // Man I'd be great if I knew shit about Data Structures
-  for (let i = 0; i < 8; i++) {
-    let temp = rawData.filter(row => row.row == i);
-    for (let j = 0; j < 11; j++) {
-      let why = temp.filter(slot => slot.slot == j);
-      seats[i].push(why[0]);
-    }
-  };
-  
+const Seat: React.FC<ISeat> = (props) => {
   return(
     <>
-    {
-      seats.forEach(v => v.map(element => {
-        <IonImg
-          id={element.id}
-          className={`seat-hall ${
-            element.status[0] == true ? 'seat-occupied'
-              : element.status[1] == true ? 'seat-transaction'
-                : 'seat-free'
-          }`}
-          src='public/assets/img/hall/seat.svg'
-          alt={
-            element.status[0] == true ? 'Asiento ocupado'
-              : element.status[1] == true ? 'Asiento reservado'
-                : 'Asiento libre'
-          }
-        ></IonImg>
-      }))
-    }
+    <IonCol>
+      <IonIcon src='localhost:8008/static/img/ac739a25b2f24c6f9f430bf42512c24c.svg' id={props.id} className={
+        props.status[1] == true ? 'seat-occupied'
+          : props.status[0] == true ? 'seat-transaction' : 'seat-open'
+      }></IonIcon>
+    </IonCol>
     </>
   );
-}
+};
 
 export default Seat;

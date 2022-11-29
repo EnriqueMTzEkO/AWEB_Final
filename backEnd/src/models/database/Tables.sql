@@ -77,6 +77,7 @@ CREATE TABLE `SEATS`(
     `row` INT NOT NULL,
     `slot` INT NOT NULL,
     `status` VARCHAR(8) NOT NULL,
+    `US_id` BINARY(16) DEFAULT NULL,
     CONSTRAINT `PK_SEAT` PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 

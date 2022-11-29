@@ -20,6 +20,7 @@
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
     "argon2": "^0.30.2",
+    "axios": "^1.2.0",
     "cors": "^2.8.5",
     "date-fns": "^2.29.3",
     "history": "^4.9.0",

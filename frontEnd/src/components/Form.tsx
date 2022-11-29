@@ -5,7 +5,7 @@ import {
   IonLabel,
   IonButton
 } from '@ionic/react';
-import IUserAccessForm from '../model/Form';
+import { IUserAccessForm } from '../model/Form';
 
 const FormsComponent = (props: IUserAccessForm) => {
   return(
@@ -21,7 +21,7 @@ const FormsComponent = (props: IUserAccessForm) => {
               type={element.type}
               id={element.id}
               ref={element.ref || null}
-              onIonChange={(e) => element.changeEvent(e.target.value)}
+              onIonChange={(e) => changeEvent(e.target.value)}
               value={element.value}
               required={element.required || false}
             >

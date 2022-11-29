@@ -7,6 +7,7 @@ False,
 62,
 'USA'
 );
+INSERT INTO `movies` VALUES(UNHEX('68EA3DCD6E9311EDA83AAC9E17ECF698'), 'Bill struggles to put together his shattered psyche, in this new feature film version of Don Hertzfeldt\'s animated short film trilogy.','It\'s such a Beautiful Day',2012,False,-1,62,'USA','DRM');
 
 CALL `SP_IMovies`('A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims.',
 'The Thing',
@@ -16,6 +17,7 @@ False,
 109,
 'USA'
 );
+INSERT INTO MOVIES VALUES(UNHEX('5AF046786E9411EDA83AAC9E17ECF698'), 'A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims.','The Thing',1982,False,4,109,'USA','HRR');
 
 CALL `SP_IMovies`('Born on the original Christmas in the stable next door to Jesus Christ, Brian of Nazareth spends his life being mistaken for a messiah.',
 'Monty Python\'s Life of Brian',
@@ -25,37 +27,38 @@ False,
 94,
 'GBR'
 );
+INSERT INTO `MOVIES` VALUES(UNHEX('9B991D916E9411EDA83AAC9E17ECF698'), 'Born on the original Christmas in the stable next door to Jesus Christ, Brian of Nazareth spends his life being mistaken for a messiah.','Monty Python\'s Life of Brian',1979,False,4,94,'GBR','CMD');
 
 -- Admin Credentials
 INSERT INTO `USERS` VALUES(UNHEX(REPLACE(uuid(),'-','')), 'momo', '$argon2i$v=19$m=64,t=4,p=4$c1hJVGhTSUk2Z2NCY0FPSg$27qIquf13Kd6BbvI122SgA', 'throwaway1111157@gmail.com', 0, 1);
 
 -- Scores
-INSERT INTO `SCORES` VALUES(UNHEX(REPLACE(uuid(),'-','')), UNHEX('5AF046786E9411EDA83AAC9E17ECF698'), 5, UNHEX('693238EB6E9B11EDA83AAC9E17ECF698')),
-(UNHEX(REPLACE(uuid(),'-','')), UNHEX('68EA3DCD6E9311EDA83AAC9E17ECF698'), 5, UNHEX('693238EB6E9B11EDA83AAC9E17ECF698')),
-(UNHEX(REPLACE(uuid(),'-','')), UNHEX('9B991D916E9411EDA83AAC9E17ECF698'), 5, UNHEX('693238EB6E9B11EDA83AAC9E17ECF698'));
+INSERT INTO `SCORES` VALUES(UNHEX('BDC4376C6ED711EDAE1FAC9E17ECF698'), UNHEX('5AF046786E9411EDA83AAC9E17ECF698'), 5, UNHEX('693238EB6E9B11EDA83AAC9E17ECF698')),
+(UNHEX('BDC43B256ED711EDAE1FAC9E17ECF698'), UNHEX('68EA3DCD6E9311EDA83AAC9E17ECF698'), 5, UNHEX('693238EB6E9B11EDA83AAC9E17ECF698')),
+(UNHEX('BDC43BE36ED711EDAE1FAC9E17ECF698'), UNHEX('9B991D916E9411EDA83AAC9E17ECF698'), 5, UNHEX('693238EB6E9B11EDA83AAC9E17ECF698'));
 
 -- People
-INSERT INTO `PEOPLE` VALUES(UNHEX(REPLACE(uuid(),'-','')), 'Don Hertzfeld'),
-	(UNHEX(REPLACE(uuid(),'-','')), 'Sara Cushman'),
-	(UNHEX(REPLACE(uuid(),'-','')), 'Brian Hamblin'),
-	(UNHEX(REPLACE(uuid(),'-','')), 'John Carpenter'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Bill Lancaster'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'David Foster'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Lawrence Turman'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Kurt Russell'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Dean Cundey'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Todd Ramsay'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Ennio Morricone'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Terry Jones'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Graham Chapman'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'John Cleese'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Terry Gilliam'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Eric Idle'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Michael Pallin'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'John Goldstone'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Peter Biziou'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Julian Doyle'),
-    (UNHEX(REPLACE(uuid(),'-','')), 'Geoffrey Burgon');
+INSERT INTO `PEOPLE` VALUES(UNHEX('EAEBC7776E9D11EDA83AAC9E17ECF698'), 'Don Hertzfeld'),
+	(UNHEX('EAF36F546E9D11EDA83AAC9E17ECF698'), 'Sara Cushman'),
+	(UNHEX('EAF370756E9D11EDA83AAC9E17ECF698'), 'Brian Hamblin'),
+	(UNHEX('EAF370D56E9D11EDA83AAC9E17ECF698'), 'John Carpenter'),
+    (UNHEX('EAF371266E9D11EDA83AAC9E17ECF698'), 'Bill Lancaster'),
+    (UNHEX('EAF371736E9D11EDA83AAC9E17ECF698'), 'David Foster'),
+    (UNHEX('EAF37D216E9D11EDA83AAC9E17ECF698'), 'Lawrence Turman'),
+    (UNHEX('EAF37DFD6E9D11EDA83AAC9E17ECF698'), 'Kurt Russell'),
+    (UNHEX('EAF37E486E9D11EDA83AAC9E17ECF698'), 'Dean Cundey'),
+    (UNHEX('EAF37E906E9D11EDA83AAC9E17ECF698'), 'Todd Ramsay'),
+    (UNHEX('EAF37ED46E9D11EDA83AAC9E17ECF698'), 'Ennio Morricone'),
+    (UNHEX('EAF37F146E9D11EDA83AAC9E17ECF698'), 'Terry Jones'),
+    (UNHEX('EAF37F546E9D11EDA83AAC9E17ECF698'), 'Graham Chapman'),
+    (UNHEX('EAF37F906E9D11EDA83AAC9E17ECF698'), 'John Cleese'),
+    (UNHEX('EAF37FCC6E9D11EDA83AAC9E17ECF698'), 'Terry Gilliam'),
+    (UNHEX('EAF380066E9D11EDA83AAC9E17ECF698'), 'Eric Idle'),
+    (UNHEX('EAF380546E9D11EDA83AAC9E17ECF698'), 'Michael Pallin'),
+    (UNHEX('EAF380986E9D11EDA83AAC9E17ECF698'), 'John Goldstone'),
+    (UNHEX('EAF381416E9D11EDA83AAC9E17ECF698'), 'Peter Biziou'),
+    (UNHEX('EAF3817F6E9D11EDA83AAC9E17ECF698'), 'Julian Doyle'),
+    (UNHEX('EAF3834C6E9D11EDA83AAC9E17ECF698'), 'Geoffrey Burgon');
 
 -- People have roles
 INSERT INTO `person_has_role` VALUES(UNHEX('68EA3DCD6E9311EDA83AAC9E17ECF698'), UNHEX('EAEBC7776E9D11EDA83AAC9E17ECF698'), 'DIR'),
@@ -90,12 +93,12 @@ INSERT INTO `person_has_role` VALUES(UNHEX('68EA3DCD6E9311EDA83AAC9E17ECF698'), 
     (UNHEX('9B991D916E9411EDA83AAC9E17ECF698'), UNHEX('EAF3834C6E9D11EDA83AAC9E17ECF698'), 'MUS');
     
 -- Companies
-INSERT INTO `COMPANIES` VALUES(UNHEX(REPLACE(uuid(),'-','')), 'The Turman-Foster Company'),
-(UNHEX(REPLACE(uuid(),'-','')), 'Universal Pictures'),
-(UNHEX(REPLACE(uuid(),'-','')), 'HandMade Films'),
-(UNHEX(REPLACE(uuid(),'-','')), 'Python (Monty) Films'),
-(UNHEX(REPLACE(uuid(),'-','')), 'Cinema International Coporation'),
-(UNHEX(REPLACE(uuid(),'-','')), 'Bitter Films');
+INSERT INTO `COMPANIES` VALUES(HEX('F9A5058C6E9F11EDA83AAC9E17ECF698'), 'The Turman-Foster Company'),
+(HEX('F9AAD0C26E9F11EDA83AAC9E17ECF698'), 'Universal Pictures'),
+(HEX('F9AAD1E96E9F11EDA83AAC9E17ECF698'), 'HandMade Films'),
+(HEX('F9AAD2326E9F11EDA83AAC9E17ECF698'), 'Python (Monty) Films'),
+(HEX('F9AAD2786E9F11EDA83AAC9E17ECF698'), 'Cinema International Coporation'),
+(HEX('F9AAD2BD6E9F11EDA83AAC9E17ECF698'), 'Bitter Films');
 
 INSERT INTO `company_has_role` VALUES(UNHEX('5AF046786E9411EDA83AAC9E17ECF698'), UNHEX('F9A5058C6E9F11EDA83AAC9E17ECF698'), 'PRO'),
 (UNHEX('5AF046786E9411EDA83AAC9E17ECF698'), UNHEX('F9AAD0C26E9F11EDA83AAC9E17ECF698'), 'DIS'),

@@ -15,7 +15,7 @@ import AuthContext from '../context/authProvider';
 import { Link } from 'react-router-dom';
 import axios from '../api/axios';
 
-const LOGIN_URL = '/auth';
+const LOGIN_URL = '/user/login';
 
 const Login = () => {
   // @ts-ignore: idk
@@ -96,7 +96,8 @@ const Login = () => {
             // @ts-ignore: Can't fix don't care
             ref={userRef}
             autoComplete="off"
-            onChange={(e) => setUser((e.target as HTMLInputElement)!.value) }
+            // @ts-ignore: Can't fix don't care
+            onIonChange={(e) => setUser(e.target.value) }
             value={user}
             required
             ></IonInput>
@@ -108,7 +109,8 @@ const Login = () => {
             <IonInput
             type="password"
             id="login-password"
-            onChange={(e) => setPwd((e.target as HTMLInputElement)!.value) }
+            // @ts-ignore: Can't fix don't care
+            onIonChange={(e) => setPwd(e.target.value) }
             value={pwd}
             required
             ></IonInput>

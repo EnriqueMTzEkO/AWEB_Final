@@ -1,14 +1,13 @@
 -- Credentials Confirmer
-DROP PROCEDURE IF EXISTS `SP_CONFIRM_ADMIN_KEY`;
+-- The key must be created before using this function.
+DROP FUNCTION IF EXISTS `auth_client_admin`;
 DELIMITER //
-CREATE DEFINER='n3G49MRq9MIh'@'localhost' PROCEDURE `SP_CONFIRM_ADMIN_KEY`(IN `cs` BINARY(16), OUT `VALID` BOOLEAN)
+CREATE FUNCTION `auth_client_admin`(`client_key` BINARY(16))
+RETURNS BOOLEAN
+DETERMINISTIC
 BEGIN
-	SELECT @ADMIN_KEY:=AES_DECRYPT(`cs`, @admin_key);
-    IF ADMIN_KEY = BINARY('fl13O3QW98Iikn0') THEN
-        SET `VALID` = TRUE;
-	ELSE 
-		SET `VALID` = FALSE;
-	END IF;
+	SELECT UNHEX(SHA2(`key`,512)) INTO @temp FROM `keychain` WHERE `name` = 'user_key';
+	RETURN AES_DECRYPT(`client_key`, @temp) = BINARY('Lo452VkDEfmqMRS');
 END //
 DELIMITER ;
 

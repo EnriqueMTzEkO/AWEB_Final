@@ -27,4 +27,6 @@ SHOW GRANTS FOR 'n3G49MRq9MIh'@'localhost';
 SET @user_key = UNHEX(SHA2('Lg3a18Fz49ZiMo0E',512));
 SET @admin_key = UNHEX(SHA2('wH4ci67fG53Xo5yBxYOAzXwgrIc4tuhQ',512));
 
-SET GLOBAL general_log=ON;
+SET GLOBAL general_log = 1;
+SET GLOBAL log_output = 'table';
+SELECT * FROM mysql.general_log;

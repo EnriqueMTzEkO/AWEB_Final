@@ -1,5 +1,5 @@
 import express, { Request, response, Response} from 'express';
-import argon2 from 'argon2';
+import * as argon2 from 'argon2';
 import conn from '../config/Connector';
 
 const createUsers = async (req: Request, res: Response) => {
@@ -28,21 +28,22 @@ const createUsers = async (req: Request, res: Response) => {
   const connection = await conn();
 
   const duplicateName = async () => {
-    const query = 'SELECT `username` FROM `USERS` WHERE `username` = ?';
-    const [dupe] = await connection.query(query, [username])
+    const query = 'CALL sp_dupe_check(UNHEX(?), ?, ?)';
+    const dupe = await connection.query(query, [process.env.DB_CUSTOMER_AUTH_KEY, username, email])
       .then((res) => {
-        return res;
+        // @ts-ignore: Get me my values
+        return res[0][0][0].id;
       });
+    return dupe;
   };
 
-  if (duplicateName.length > 0) {
-    return res.status(409).json({ message: 'Duplicate username.' });
+  if (await duplicateName() != 0) {
+    return res.status(409).json({ message: 'Usuario o email ocupado.' });
   };
   const hash = await argon2.hash(password);
   
   const createUser = async () => {
     const sql = `CALL sp_create_user(UNHEX(?), ?, ?, ?)`;
-    console.log(process.env.DB_CUSTOMER_AUTH_KEY, username, hash, email);
     return await connection.query(sql, [process.env.DB_CUSTOMER_AUTH_KEY!, username, hash, email]);
   };
 

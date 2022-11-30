@@ -9,6 +9,7 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 
 // Custom import
 import corsOptions from './src/config/corsOptions';
@@ -20,13 +21,20 @@ const PORT = process.env.PORT || 8009;
 // Middleware Setup
 server.use(cors(corsOptions));
 server.use(express.json());
+server.use(cookieParser());
 
 // Static file serve
 const publicDir = path.join(__dirname, 'public');
 server.use('/static', express.static(publicDir));
 
 // Router
+// Unverified Routes
 server.use('/', require('./src/routes/root'));
 server.use('/user', require('./src/routes/userRoutes'));
+server.use('/logout', require('./src/routes/logout'));
+
+// Verified Routes
+server.use('/auth', require('./src/routes/refresh'));
+server.use('/refresh', require('./src/routes/refresh'));
  
 server.listen(PORT, () => console.log(`Server running on port ${PORT}.`));

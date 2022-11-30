@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS `USERS`;
 CREATE TABLE `USERS`(
 	`id` BINARY(16) NOT NULL,
     `username` VARCHAR(16) NOT NULL,
-    `password` CHAR(72) NOT NULL,
+    `password` VARCHAR(127) NOT NULL,
     `email` VARCHAR(64) NOT NULL,
     `role` TINYINT NOT NULL,
     `active` BOOLEAN DEFAULT TRUE,
@@ -32,6 +32,7 @@ CREATE TABLE `MOVIES`(
     `rating` INT NOT NULL,
     `length` INT NOT NULL,
     `country` CHAR(3) NOT NULL,
+    `genre` CHAR(3) NOT NULL,
     CONSTRAINT `MV_KEY` PRIMARY KEY(`id`)
 ) ENGINE = InnoDB;
 
@@ -74,10 +75,10 @@ CREATE TABLE `SHOWINGS`(
 CREATE TABLE `SEATS`(
     `id` BINARY(16) NOT NULL,
     `SH_id` BINARY(16) NOT NULL,
+    `US_id` BINARY(16) DEFAULT NULL,
     `row` INT NOT NULL,
     `slot` INT NOT NULL,
     `status` VARCHAR(8) NOT NULL,
-    `US_id` BINARY(16) DEFAULT NULL,
     CONSTRAINT `PK_SEAT` PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
@@ -98,10 +99,3 @@ CREATE TABLE `COMPANY_HAS_ROLE`(
     `role` CHAR(3) NOT NULL
 ) ENGINE = InnoDB CHARACTER SET utf8mb4;
 -- END TABLES
-
--- Key Chain
-DROP TABLE IF EXISTS `keychain`;
-CREATE TABLE `keychain`(
-	`name` VARCHAR(9) NOT NULL,
-    `key` VARCHAR(32) NOT NULL
-) ENGINE = InnoDB CHARACTER SET utf8mb4;

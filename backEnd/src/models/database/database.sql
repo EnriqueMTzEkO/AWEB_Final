@@ -30,3 +30,7 @@ SET @admin_key = UNHEX(SHA2('wH4ci67fG53Xo5yBxYOAzXwgrIc4tuhQ',512));
 SET GLOBAL general_log = 1;
 SET GLOBAL log_output = 'table';
 SELECT * FROM mysql.general_log;
+
+SET GLOBAL general_log = OFF;
+TRUNCATE TABLE mysql.general_log;
+SET GLOBAL general_log = ON;

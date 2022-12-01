@@ -32,6 +32,7 @@ server.use('/static', express.static(publicDir));
 server.use('/', require('./src/routes/root'));
 server.use('/user', require('./src/routes/userRoutes'));
 server.use('/logout', require('./src/routes/logout'));
+server.use('/resources', require('./src/routes/hallRoute'));
 
 // Verified Routes
 server.use('/auth', require('./src/routes/refresh'));

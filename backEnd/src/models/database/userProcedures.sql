@@ -25,7 +25,7 @@ DELIMITER ;
 -- Get Movies
 DROP PROCEDURE IF EXISTS `sp_movie_full`;
 DELIMITER //
-CREATE PROCEDURE `sp_movie_full`(IN `key` BINARY(16),IN `inid` BINARY(16))
+CREATE PROCEDURE `sp_movie_full`(IN `key` BINARY(16), IN `inid` BINARY(16))
 BEGIN
 	IF `auth_client`(`key`) = 1 THEN
 		SELECT * FROM `full_movie` WHERE `id` = `inid`;
@@ -36,13 +36,11 @@ DELIMITER ;
 -- Get actors
 DROP PROCEDURE IF EXISTS `sp_get_actors`;
 DELIMITER //
-CREATE PROCEDURE `sp_get_actors`(IN `key` BINARY(16),IN `inid` BINARY(16))
+CREATE PROCEDURE `sp_get_actors`(IN `key` BINARY(16), IN `intt` VARCHAR(48))
 BEGIN
 	IF `auth_client`(`key`) = 1 THEN
-		SELECT `Nombre`, `Rol` FROM `involved`
-        WHERE `Película` = (
-			SELECT `Título` FROM `full_movie` WHERE `id` = `inid`
-        );
+		SELECT `name`, `role` FROM `involved`
+        WHERE `title` = `intt`;
     END IF;
 END //
 DELIMITER ;
@@ -50,13 +48,11 @@ DELIMITER ;
 -- Get Companies
 DROP PROCEDURE IF EXISTS `sp_get_company`;
 DELIMITER //
-CREATE PROCEDURE `sp_get_company`(IN `key` BINARY(16),IN `inid` BINARY(16))
+CREATE PROCEDURE `sp_get_company`(IN `key` BINARY(16), IN `intt` VARCHAR(48))
 BEGIN
 	IF `auth_client`(`key`) = 1 THEN
-		SELECT `Compañía`, `Rol` FROM `comp`
-        WHERE `Película` = (
-			SELECT `Título` FROM `full_movie` WHERE `id` = `inid`
-        );
+		SELECT `name`, `role` FROM `comp`
+        WHERE `title` = `intt`;
     END IF;
 END //
 DELIMITER ;
@@ -128,5 +124,16 @@ BEGIN
 		UPDATE `users` SET `token` = '' WHERE `username` = `un` AND `token` = `tk`;
         SELECT `token` FROM `users` WHERE `username` = `un`;
     END IF;
+END //
+DELIMITER ;
+
+-- Get one show
+DROP PROCEDURE IF EXISTS `sp_show`
+DELIMITER //
+CREATE PROCEDURE `sp_show`(IN `key` BINARY(16), IN `id` BINARY(16))
+BEGIN
+	IF `auth_client`(`key`) = 1 THEN
+		SELECT * FROM `seats` WHERE `SH_id` = `id`;
+    END IF ;
 END //
 DELIMITER ;

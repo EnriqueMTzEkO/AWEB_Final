@@ -1,5 +1,6 @@
+// @ts-nocheck
 import conn from '../config/Connector';
-
+/* 
 const populateShows = async (days: number) => {
   const connection = await conn();
   let sql = `SELECT * FROM showings WHERE DATE(start) IN (SELECT DATE(max(start)) FROM showings)`;
@@ -10,7 +11,25 @@ const populateShows = async (days: number) => {
     }
   });
 };
+*/
+
+const allSeats = async () => {
+  const connection = await conn();
+  let sql = 'CALL sp_all_shows()';
+  // @ts-ignore: A
+  const temp = await connection.query(sql);
+  const show = temp[0][0];
+  show.forEach(element => {
+    for (let i = 1; i < 12; i++) {
+      for (let j = 1; j < 5; j++) {
+        let sql = 'CALL sp_seater(?, ?, ?);'
+        connection.query(sql, [element.id, i, j]);
+      }
+    }
+  })
+  connection.end();
+};
 
 export default {
-  populateShows
+  allSeats
 };

@@ -38,7 +38,7 @@ const App: React.FC = () => (
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="">
+        <Route path="/hall">
           <Hall />
         </Route>
         <Route path="/test">

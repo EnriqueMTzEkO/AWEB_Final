@@ -5,8 +5,11 @@ import {
   IonRow,
   IonCol,
   IonImg,
-  IonTitle
+  IonTitle,
+  IonList,
+  IonItem
 } from "@ionic/react";
+import { Link } from "react-router-dom";
 
 const data = {
   "movie": {
@@ -61,6 +64,41 @@ const data = {
           "role": "DIS"
       }
   ]
+};
+
+const shows = {
+  "data": [
+    {
+      "id": "CEA8215070FE11ED8B3500155DF03F05",
+      "start": "2022-12-01 15:45:00",
+      "end": "2022-12-01 17:55:00",
+      "hall": 2
+    },
+    {
+      "id": "CEA821D170FE11ED8B3500155DF03F05",
+      "start": "2022-12-01 18:00:00",
+      "end": "2022-12-01 20:10:00",
+      "hall": 2
+    },
+    {
+      "id": "CEA8225370FE11ED8B3500155DF03F05",
+      "start": "2022-12-01 19:00:00",
+      "end": "2022-12-01 21:40:00",
+      "hall": 3
+    },
+    {
+      "id": "CEA822D470FE11ED8B3500155DF03F05",
+      "start": "2022-12-01 21:00:00",
+      "end": "2022-12-01 23:00:00",
+      "hall": 1
+    },
+    {
+      "id": "CEA8235470FE11ED8B3500155DF03F05",
+      "start": "2022-12-01 20:20:00",
+      "end": "2022-12-01 22:30:00",
+      "hall": 1
+    }
+  ]
 }
 
 const Movies: React.FC = () => {
@@ -92,7 +130,64 @@ const Movies: React.FC = () => {
                 <IonCol>{data.movie.subtitles == 1 ? "Sí" : "No"}</IonCol>
               </IonRow>
               <IonRow>
-                <IonCol></IonCol>
+                <IonCol>
+                  {data.movie.genre == "HRR" ? "Horror" 
+                    : data.movie.genre == "CMD" ? "Comedia" : "Drama"}
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="8">
+                  <IonRow>
+                    {data.movie.description}
+                  </IonRow>
+                  <IonRow>
+                    <IonCol>Director: </IonCol>
+                    <IonCol>{ data.actors.map(x => {
+                    if ( x.role == "DIR") return x.name;
+                  })}</IonCol>
+                  </IonRow>
+                  <IonRow>
+                    <IonCol>Estelarizada: </IonCol>
+                    <IonCol>{ data.actors.map(x => {
+                    if ( x.role == "STR") return x.name;
+                  })}</IonCol>
+                  </IonRow>
+                  <IonRow>
+                    <IonCol>País: </IonCol>
+                    <IonCol>{ data.movie.country }</IonCol>
+                  </IonRow>
+                  <IonRow>
+                    <IonCol>Productor: </IonCol>
+                    <IonCol>{ data.companies.map(x => {
+                    if ( x.role == "PRO") return x.name;
+                  })}</IonCol>
+                  </IonRow>
+                  <IonRow>
+                    <IonCol>Distribuidor: </IonCol>
+                    <IonCol>{ data.companies.map(x => {
+                    if ( x.role == "DIS") return x.name;
+                  })}</IonCol>
+                  </IonRow>
+                  <IonRow>
+                    <IonCol>Duración: </IonCol>
+                    <IonCol>{data.movie.length}</IonCol>
+                  </IonRow>
+                </IonCol>
+                <IonCol size="4">
+                  <IonList>
+                  {shows.data.map(x => {
+                    return(
+                      <IonItem key={x.id}>
+                        <Link to={`/show/${x.id}`}>{`Sala ${x.hall}\nInicio: ${x.start}\tFin: ${x.end}`}</Link>
+                      </IonItem>
+                    );
+                  })}
+                  </IonList>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6"><iframe src='https://youtu.be/VnGBL-qrmvE' width="100%" height="100%"></iframe></IonCol>
+                <IonCol size="6"><iframe src='https://youtu.be/5ftmr17M-a4' width="100%" height="100%"></iframe></IonCol>
               </IonRow>
             </IonGrid>
           </IonCol>

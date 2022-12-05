@@ -137,3 +137,25 @@ BEGIN
     END IF ;
 END //
 DELIMITER ;
+
+-- Movie ids
+DROP PROCEDURE IF EXISTS `sp_movie_init`;
+DELIMITER //
+CREATE PROCEDURE `sp_movie_init`(IN `key` BINARY(16))
+BEGIN
+	IF `auth_client`(`key`) = 1 THEN
+		SELECT HEX(`id`) AS `id`, `title` FROM `full_movie`;
+    END IF ;
+END //
+DELIMITER ;
+
+-- Movie ids
+DROP PROCEDURE IF EXISTS `sp_movie_init`;
+DELIMITER //
+CREATE PROCEDURE `sp_movie_init`(IN `key` BINARY(16))
+BEGIN
+	IF `auth_client`(`key`) = 1 THEN
+		SELECT HEX(`id`) AS `id`, `title` FROM `full_movie`;
+    END IF ;
+END //
+DELIMITER ;

@@ -1,6 +1,7 @@
-import { Link, Redirect, Route } from 'react-router-dom';
+import { Link, Redirect, Route, Router } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import React from 'react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -25,6 +26,7 @@ import Login from './pages/LogIn';
 import Test from './pages/test';
 import Hall from './pages/Hall';
 import Movie from './pages/Movies';
+import Landing from './pages/Landing';
 
 setupIonicReact();
 
@@ -32,6 +34,9 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
+        <Route path="/landing">
+          <Landing />
+        </Route>
         <Route path="/register">
           <Register />
         </Route>
@@ -43,9 +48,6 @@ const App: React.FC = () => (
         </Route>
         <Route path="/test">
           <Test />
-        </Route>
-        <Route path="/movie">
-          <Movie />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>

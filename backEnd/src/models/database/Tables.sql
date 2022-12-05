@@ -33,6 +33,8 @@ CREATE TABLE `MOVIES`(
     `length` INT NOT NULL,
     `country` CHAR(3) NOT NULL,
     `genre` CHAR(3) NOT NULL,
+    `teaser` VARCHAR(36) NOT NULL,
+    `trailer` VARCHAR(36) NOT NULL,
     CONSTRAINT `MV_KEY` PRIMARY KEY(`id`)
 ) ENGINE = InnoDB;
 

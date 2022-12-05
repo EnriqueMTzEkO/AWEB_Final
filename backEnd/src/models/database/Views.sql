@@ -13,6 +13,8 @@ SELECT `mv`.`id`,
     `genre`,
     `length`,
     `country`,
+    `teaser`,
+    `trailer`,
     AVG(`sc`.`score`) AS `score`
 FROM `MOVIES` AS `mv`
 INNER JOIN `SCORES` AS `sc` ON `mv`.`id` = `sc`.`MV_id`

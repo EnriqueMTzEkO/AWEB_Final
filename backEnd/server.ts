@@ -34,6 +34,9 @@ server.use('/user', require('./src/routes/userRoutes'));
 server.use('/logout', require('./src/routes/logout'));
 server.use('/resources', require('./src/routes/hallRoute'));
 
+// I'll verify these later
+server.use('/movies', require('./src/routes/moviesRoute'));
+
 // Verified Routes
 server.use('/auth', require('./src/routes/refresh'));
 server.use('/refresh', require('./src/routes/refresh'));

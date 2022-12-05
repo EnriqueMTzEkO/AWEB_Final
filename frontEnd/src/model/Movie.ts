@@ -1,29 +1,29 @@
 /**
  * @fileoverview Sets Movie's fields.
  */
-export interface IPoster {
-  alt: string;
-  images: Array<string>;
-};
-
-export interface IDescription {
-  id: string;
-  description: string;
-  title: string;
-  year: number;
-  country: string;
-  subtitles: boolean;
-  starring: Array<string>;
-  director: string;
-  producer: string;
-  distributor: string;
-  rating: number;
-  length: number;
-  score: number;
-  genre: Array<string>;
-};
+import IntrinsicAttributes from 'react';
 
 export interface IMovie {
-  poster: IPoster;
-  info: IDescription;
+  movie: {
+    id: string;
+    title: string;
+    description: string;
+    year: number;
+    subtitles: boolean;
+    rating: number;
+    genre: string;
+    length: number;
+    country: string;
+    score: number;
+    teaser: string;
+    trailer: string;
+  }
+  people: {
+    name: string;
+    role: string;
+  }[];
+  companies: {
+    name: string;
+    role: string;
+  }[];
 };

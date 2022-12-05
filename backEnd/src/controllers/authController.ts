@@ -40,22 +40,20 @@ const handleLogin = async (req, res) => {
 
   if (!match || !foundUser.active) return res.sendStatus(401);
 
-  if (match) {
-    const accessToken = jwt.sign(
-      { "username": foundUser.username },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '1d'}
-    );
-    const refreshToken = jwt.sign(
-      { "username": foundUser.username },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: '1d'}
-    );
+  const accessToken = jwt.sign(
+    { "username": foundUser.username },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: '1d'}
+  );
+  const refreshToken = jwt.sign(
+    { "username": foundUser.username },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: '1d'}
+  );
 
-    logCookie(foundUser.username, refreshToken);
-    res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-    res.json({ accessToken });
-  }
+  logCookie(foundUser.username, refreshToken);
+  res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+  res.json({ accessToken });
 };
 
 export default {

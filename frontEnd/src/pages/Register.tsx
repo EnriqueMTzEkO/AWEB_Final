@@ -76,8 +76,7 @@ const Register = () => {
           withCredentials: true
         }
       );
-      console.log(response.data);
-      setSuccess(true);
+    
     } catch (err: any) {
       if (!err?.response) {
         setErrMsg('No server response');

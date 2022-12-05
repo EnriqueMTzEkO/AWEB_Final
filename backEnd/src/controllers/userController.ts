@@ -50,6 +50,8 @@ const createUsers = async (req: Request, res: Response) => {
   createUser();
   connection.end();
 
+  return res.status(201).json({ message: "Usuario creado correctamente."});
+
 };
 
 const getUsers = () => {

@@ -39,7 +39,7 @@ const getMovie = async (req, res) => {
   connection.end();
   res.json({
     "movie": movie[0][0][0],
-    "actors": actors[0][0],
+    "people": actors[0][0],
     "companies": companies[0][0]
   });
 };

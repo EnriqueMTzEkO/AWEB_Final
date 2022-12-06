@@ -30,8 +30,8 @@ BEGIN
     SET days = 0;
     label1: LOOP
 		SET days = days + 1;
-        IF days < 14 THEN
-			INSERT INTO `showings` SELECT guuid(), DATE_ADD(`start`, INTERVAL days DAY), DATE_ADD(`end`, INTERVAL days DAY), `MV_id`, `hall` FROM showings WHERE DATE(`start`) IN (SELECT DATE(min(start)) FROM showings);
+        IF days < 8 THEN
+			INSERT INTO `showings` SELECT guuid(), DATE_ADD(`start`, INTERVAL days DAY), DATE_ADD(`end`, INTERVAL days DAY), `MV_id`, `hall` FROM showings WHERE DATE(`start`) IN (SELECT DATE(min(`start`)) FROM `showings`);
             ITERATE label1;
 		END IF;
         LEAVE label1;

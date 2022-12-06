@@ -5,44 +5,28 @@ import {
   IonRow,
   IonIcon
 } from "@ionic/react";
+import { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router";
-import axios from "../api/axios";
-import seatList from '../model/temp.json';
-
-const temp = seatList.seats;
-const seats = [[], [], [], [], [], [], [], [], [], [], []];
-
-for (let i = 1; i < 12; i++) {
-  // @ts-ignore: Never bug
-  seats[i-1].push(temp.filter(seat => {
-    return seat.row == i;
-  }));
-};
-
-const SEAT_ROUTE = '/seats';
-
-const getSeats = async () => {
-  try {
-    const response = await axios.get(SEAT_ROUTE);
-    const temp = response?.data?.seats;
-    const seat = [[], [], [], [], [], [], [], [], [], [], []]
-    for (let i = 0; i < 12; i++) {
-      // @ts-ignore: Never bug
-      seat[i].push(temp.find(seat => {
-        return seat.row == i;
-      }));
-    };
-    return seat;
-  } catch (e) {
-    console.log(e);
-  }
-};
+import { getSeats } from '../hooks/getSeats';
 
 interface ISeat extends RouteComponentProps<{
   id: string;
-}> {}
+}> {};
+
+interface ISeats {
+  id: string;
+  row: number;
+  slot: number;
+  status: number;
+};
 
 const Hall: React.FC<ISeat> = ( { match } ) => {
+  const [seats, setSeats] = useState<Array<Array<ISeats>>>();
+
+  useEffect(() => {
+    getSeats(match.params.id).then((data) => setSeats(data));
+  }, []);
+
   return(
     <IonContent>
       <IonGrid>
@@ -54,16 +38,26 @@ const Hall: React.FC<ISeat> = ( { match } ) => {
             </IonRow>
           </IonGrid>
         </IonRow>
-        <IonRow>
-          {seats.map(x => {
+          { 
+          seats ?
+          seats.map((x,i) => {
             return(
-              // @ts-ignore: Never
-              <IonCol size="3" key={x.id}>
-                <IonIcon src="assets/icon/ac739a25b2f24c6f9f430bf42512c24c.svg"></IonIcon>
-              </IonCol>
+              <IonRow key={i}>
+                {
+                  x ? 
+                x.map(y => {
+                return(
+                <IonCol size="2" key={y.id}>
+                  <IonIcon src="assets/icon/ac739a25b2f24c6f9f430bf42512c24c.svg"></IonIcon>
+                </IonCol>
+                );
+                }) : <></>
+                }
+              </IonRow>
             );
-          })}
-        </IonRow>
+          })
+        : <></>
+        }
       </IonGrid>
     </IonContent>
   );

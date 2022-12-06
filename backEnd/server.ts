@@ -33,6 +33,7 @@ server.use('/', require('./src/routes/root'));
 server.use('/user', require('./src/routes/userRoutes'));
 server.use('/logout', require('./src/routes/logout'));
 server.use('/resources', require('./src/routes/hallRoute'));
+server.use('/admin', require('./src/routes/adminRoutes'))
 
 // I'll verify these later
 server.use('/movies', require('./src/routes/moviesRoute'));

@@ -19,13 +19,7 @@ const getShows = async (req, res) => {
 const getSeats = async (req, res) => {
   const seats = await util('CALL sp_seats(UNHEX(?), UNHEX(?))',
     [process.env.DB_CUSTOMER_AUTH_KEY, req.params.show]);
-
-  seats.forEach(element => {
-    let newId = Buffer.from(element.id);
-    element.id = newId.toString('hex').toUpperCase();
-    newId = Buffer.from(element.SH_id);
-    element.SH_id = newId.toString('hex').toUpperCase();
-  });
+    
   // @ts-ignore: Fuck off
   res.json({ "seats": seats});
 }

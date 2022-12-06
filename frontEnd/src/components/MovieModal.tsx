@@ -20,8 +20,6 @@ const MovieModal = (info: any) => {
     fullShow(movie.id).then(data => setShows(data));
   }, []);
 
-  console.log(shows);
-
   return(
   <IonGrid>
   <IonRow>

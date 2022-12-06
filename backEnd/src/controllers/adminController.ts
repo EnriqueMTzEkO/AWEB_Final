@@ -20,8 +20,8 @@ const allSeats = async () => {
   const temp = await connection.query(sql);
   const show = temp[0][0];
   show.forEach(element => {
-    for (let i = 1; i < 12; i++) {
-      for (let j = 1; j < 5; j++) {
+    for (let i = 1; i < 4; i++) {
+      for (let j = 1; j < 11; j++) {
         let sql = 'CALL sp_seater(?, ?, ?);'
         connection.query(sql, [element.id, i, j]);
       }

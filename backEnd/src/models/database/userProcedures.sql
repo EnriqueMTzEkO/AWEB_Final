@@ -133,7 +133,7 @@ DELIMITER //
 CREATE PROCEDURE `sp_seats`(IN `key` BINARY(16), IN `id` BINARY(16))
 BEGIN
 	IF `auth_client`(`key`) = 1 THEN
-		SELECT * FROM `seats` WHERE `SH_id` = `id`;
+		SELECT HEX(`id`) AS `id`, `row`, `slot`, `status` FROM `seats` WHERE `SH_id` = `id`;
     END IF ;
 END //
 DELIMITER ;
@@ -144,7 +144,7 @@ DELIMITER //
 CREATE PROCEDURE `sp_show`(IN `key` BINARY(16), IN `hx` BINARY(16))
 BEGIN
 	IF `auth_client`(`key`) = 1 THEN
-		SELECT HEX(`id`), AS `id` unix_timestamp(`start`) AS `start`, unix_timestamp(`end`) AS `end`, `hall`
+		SELECT HEX(`id`) AS `id`, unix_timestamp(`start`) AS `start`, unix_timestamp(`end`) AS `end`, `hall`
         FROM `showings`
         WHERE `MV_id` = `hx` AND `start` > DATE_ADD(NOW(), INTERVAL 20 MINUTE);
     END IF ;

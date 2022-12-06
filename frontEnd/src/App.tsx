@@ -25,7 +25,6 @@ import Register from './pages/Register';
 import Login from './pages/LogIn';
 import Test from './pages/test';
 import Hall from './pages/Hall';
-import Movie from './pages/Movies';
 import Landing from './pages/Landing';
 
 setupIonicReact();
@@ -43,9 +42,7 @@ const App: React.FC = () => (
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="/hall">
-          <Hall />
-        </Route>
+        <Route path={`/show/:id`} component={Hall} />
         <Route path="/test">
           <Test />
         </Route>

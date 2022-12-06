@@ -128,12 +128,25 @@ END //
 DELIMITER ;
 
 -- Get one show
-DROP PROCEDURE IF EXISTS `sp_show`
+DROP PROCEDURE IF EXISTS `sp_seats`;
 DELIMITER //
-CREATE PROCEDURE `sp_show`(IN `key` BINARY(16), IN `id` BINARY(16))
+CREATE PROCEDURE `sp_seats`(IN `key` BINARY(16), IN `id` BINARY(16))
 BEGIN
 	IF `auth_client`(`key`) = 1 THEN
 		SELECT * FROM `seats` WHERE `SH_id` = `id`;
+    END IF ;
+END //
+DELIMITER ;
+
+-- Get Showings
+DROP PROCEDURE IF EXISTS `sp_show`;
+DELIMITER //
+CREATE PROCEDURE `sp_show`(IN `key` BINARY(16), IN `hx` BINARY(16))
+BEGIN
+	IF `auth_client`(`key`) = 1 THEN
+		SELECT HEX(`id`), AS `id` unix_timestamp(`start`) AS `start`, unix_timestamp(`end`) AS `end`, `hall`
+        FROM `showings`
+        WHERE `MV_id` = `hx` AND `start` > DATE_ADD(NOW(), INTERVAL 20 MINUTE);
     END IF ;
 END //
 DELIMITER ;

@@ -1,14 +1,25 @@
 // @ts-nocheck
 import conn from '../config/Connector';
 
+const util = async (sql: string, params: string[]) => {
+  const connection = await conn();
+  const gottem = await connection.query(sql, params);
+  connection.end();
+  return gottem[0][0];
+};
+
+const getShows = async (req, res) => {
+  const shows = await util('CALL sp_show(UNHEX(?), UNHEX(?))',
+    [process.env.DB_CUSTOMER_AUTH_KEY, req.params.show]);
+
+  return res.json({ "shows": shows});
+};
+
 // @ts-ignore: req, res
 const getSeats = async (req, res) => {
-  const showId = req.params.show;
-  const connection = await conn();
-  const temp = await connection.query('CALL sp_show(UNHEX(?), UNHEX(?))',
-    [process.env.DB_CUSTOMER_AUTH_KEY, showId]);
-  connection.end();
-  const seats = temp[0][0];
+  const seats = await util('CALL sp_seats(UNHEX(?), UNHEX(?))',
+    [process.env.DB_CUSTOMER_AUTH_KEY, req.params.show]);
+
   seats.forEach(element => {
     let newId = Buffer.from(element.id);
     element.id = newId.toString('hex').toUpperCase();
@@ -46,5 +57,6 @@ const getMovie = async (req, res) => {
 
 export default {
   getSeats,
-  getMovie
+  getMovie,
+  getShows
 }

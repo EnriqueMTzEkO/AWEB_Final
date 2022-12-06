@@ -5,6 +5,7 @@ import {
   IonRow,
   IonIcon
 } from "@ionic/react";
+import { RouteComponentProps } from "react-router";
 import axios from "../api/axios";
 import seatList from '../model/temp.json';
 
@@ -35,9 +36,13 @@ const getSeats = async () => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
-const Hall = () => {
+interface ISeat extends RouteComponentProps<{
+  id: string;
+}> {}
+
+const Hall: React.FC<ISeat> = ( { match } ) => {
   return(
     <IonContent>
       <IonGrid>

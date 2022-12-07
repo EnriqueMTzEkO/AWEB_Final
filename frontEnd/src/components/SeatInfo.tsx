@@ -1,5 +1,5 @@
 import {
-  IonCol, IonRow, IonIcon, IonGrid, IonButton, IonModal, IonLabel, IonInput, IonText
+  IonCol, IonRow, IonIcon, IonGrid, IonButton, IonModal, IonLabel, IonInput, IonText, IonItem, IonList
 } from '@ionic/react';
 import { useEffect, useState, useRef } from 'react';
 
@@ -14,6 +14,42 @@ const SeatInfo = (buy: any) => {
   const [names, setNames] = useState<Array<string>>();
   const [emails, setEmail] = useState<Array<string>>();
   const [phones, setPhone] = useState<Array<number>>();
+
+  useEffect(() => {
+    // @ts-ignore
+    const v1: Array<string> = Array.from({length: buy.buy.length}, () => []);
+    // @ts-ignore
+    const v2: Array<string> = Array.from({length: buy.buy.length}, () => []);
+    // @ts-ignore
+    const v3: Array<string> = Array.from({length: buy.buy.length}, () => []);
+  }, [buy.buy]);
+
+  const sale = (ev: any) => {
+    ev.preventDefault();
+    const saleInfo = { names: names, emails: emails, phones: phones};
+    console.log(saleInfo);
+  };
+
+  const addName = (value: string, index: number) => {
+    if (names) {
+      names[index] = value;
+      setNames(names);
+    }
+  };
+
+  const addEmail = (value: string, index: number) => {
+    if (emails) {
+      emails[index] = value;
+      setEmail(emails);
+    }
+  };
+
+  const addTel = (value: number, index: number) => {
+    if (phones) {
+      phones[index] = value;
+      setPhone(phones);
+    }
+  };
 
   return(
     <IonGrid className="seats-info">
@@ -53,27 +89,35 @@ const SeatInfo = (buy: any) => {
         </IonButton>
       </IonRow>
       <IonModal ref={modal} trigger="sale-modal" className="sale-modal">
-        <IonGrid>
-          {
-            buy.buy.length > 0 ?
-            buy.buy.map((x: any,i: number) => {
-              return(
-              <IonRow key={i}>
-                <IonLabel>
-                  <IonInput type="text"></IonInput>
-                </IonLabel>
-                <IonLabel>
-                  <IonInput type="text"></IonInput>
-                </IonLabel>
-                <IonLabel>
-                  <IonInput type="number"></IonInput>
-                </IonLabel>
-              </IonRow>
-              );
-            }) :
-            <IonText>Por favor elija sus asientos primero.</IonText>
-          }
-        </IonGrid>
+        <form onSubmit={sale}>
+          <IonList>
+        {
+          buy.buy.length > 0 ?
+          // @ts-ignore
+          buy.buy.map((x, i: number) => {
+            return(
+              <IonItem key={i}>
+                <IonLabel>Nombre:</IonLabel>
+                {// @ts-ignore
+                  <IonInput type="text" value="" onIonChange={(ev) => addName(ev.target.value, i)} required={true}></IonInput>}
+                <IonLabel>Email:</IonLabel>
+                {// @ts-ignore
+                <IonInput type="email" value="" onIonChange={(ev) => addEmail(ev.target.value, i)} required={true}></IonInput>}
+                <IonLabel>Teléfono:</IonLabel>
+                {// @ts-ignore
+                <IonInput type="tel" value="" onIonChange={(ev) => addTel(ev.target.value, i)} required={true}></IonInput>}
+              </IonItem>
+            );
+          }) : <IonText>Elija sus asientos primero</IonText>
+        }
+        {
+          buy.buy.length > 0 ?
+          <IonButton>
+            Comprar Boletos
+          </IonButton> : <></>
+        }
+        </IonList>
+        </form>
       </IonModal>
     </IonGrid>
   );

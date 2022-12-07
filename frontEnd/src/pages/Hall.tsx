@@ -10,9 +10,14 @@ import {
   IonBackButton,
   IonSelect,
   IonSelectOption,
+  IonModal,
+  IonTitle,
+  IonInput,
+  IonItem,
+  IonList,
   IonButton
 } from "@ionic/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { RouteComponentProps, useHistory } from "react-router";
 import { closeCircleOutline } from 'ionicons/icons';
 import { getSeats } from '../hooks/getSeats';
@@ -43,12 +48,19 @@ interface IShow {
 };
 
 const Hall: React.FC<ISeat> = ( { match } ) => {
+  const modal = useRef<HTMLIonModalElement>(null);
   const [seats, setSeats] = useState<Array<Array<ISeats>>>();
   const [currentShow, setCurrentShow] = useState<IShow>();
   const [chosen, setChosen] = useState<Array<string>>([]);
+  const [dataInput, setDataInput] = useState(false);
 
   const [shows, setShows] = useState<Array<Array<IShow>>>();
+  const [isOpen, setIsOpen] = useState(false);
   const [dayShows, setDayShows] = useState(0);
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState(0);
 
   const [newSeats, setNewSeats] = useState(false);
 
@@ -67,7 +79,10 @@ const Hall: React.FC<ISeat> = ( { match } ) => {
 
   const addSeat = (id: string, i: number, j: number) => {
     let temp: string[] = [];
-    if (chosen?.includes(id)) {
+    if (seats && seats[i][j].status == "seat-occupied") {
+      setIsOpen(true);
+    }
+    else if (chosen?.includes(id)) {
       temp = chosen.filter(e => e != id);
       seats![i][j].status = "seat-free";
       setSeats(seats);
@@ -77,6 +92,7 @@ const Hall: React.FC<ISeat> = ( { match } ) => {
       temp = chosen;
       seats![i][j].status = "seat-reserved";
       setSeats(seats);
+      setDataInput(true);
     }
     setNewSeats(!newSeats);
     setChosen(temp);
@@ -91,6 +107,12 @@ const Hall: React.FC<ISeat> = ( { match } ) => {
     setCurrentShow(value);
     history.push(`/show/${currentShow?.id}`);
   };
+
+  const handleSubmit = (ev: any) => {
+    ev.preventDefault();
+    const item = {id: chosen[chosen.length-1], name: name, email: email, tel: phone};
+    console.log(item);
+  }
 
   return(
   <IonPage>
@@ -193,6 +215,36 @@ const Hall: React.FC<ISeat> = ( { match } ) => {
           </IonCol>
         </IonRow>
         </IonGrid>
+        <IonModal isOpen={isOpen} onWillDismiss={(ev) => setIsOpen(false)}>
+          <IonContent>
+            <IonTitle>¡Este asiento está ocupado!</IonTitle>
+          </IonContent>
+        </IonModal>
+
+        <IonModal ref={modal} isOpen={dataInput} onWillDismiss={(ev) => setDataInput(false)}>
+          <IonContent>
+            <IonList>
+              <IonItem>
+                <IonLabel>Nombre: </IonLabel>
+                <IonInput type="text" onIonChange={//@ts-ignore
+                (e) => setName(e.target.value)} required value={name}></IonInput>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Email: </IonLabel>
+                <IonInput type="email" onIonChange={//@ts-ignore
+                (e) => setEmail(e.target.value)} required value={email}></IonInput>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Teléfono: </IonLabel>
+                <IonInput type="tel" onIonChange={//@ts-ignore
+                  (e) => setPhone(e.target.value)} required value={phone}></IonInput>
+              </IonItem>
+              <IonItem>
+                <IonButton onClick={handleSubmit}>CONFIRMAR</IonButton>
+              </IonItem>
+            </IonList>
+          </IonContent>
+        </IonModal>
     </IonContent>
     <Chyron />
   </IonPage>

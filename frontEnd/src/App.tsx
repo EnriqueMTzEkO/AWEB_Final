@@ -42,9 +42,6 @@ const App: React.FC = () => (
           <Login />
         </Route>
         <Route path={`/show/:id`} component={Hall} />
-        <Route path="/test">
-          <Test />
-        </Route>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

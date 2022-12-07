@@ -130,10 +130,10 @@ DELIMITER ;
 -- Get one show
 DROP PROCEDURE IF EXISTS `sp_seats`;
 DELIMITER //
-CREATE PROCEDURE `sp_seats`(IN `key` BINARY(16), IN `id` BINARY(16))
+CREATE PROCEDURE `sp_seats`(IN `key` BINARY(16), IN `i` BINARY(16))
 BEGIN
 	IF `auth_client`(`key`) = 1 THEN
-		SELECT HEX(`id`) AS `id`, `row`, `slot`, `status` FROM `seats` WHERE `SH_id` = `id`;
+		SELECT HEX(`id`) AS `id`, `row`, `slot`, `status` FROM `seats` WHERE `SH_id` = `i`;
     END IF ;
 END //
 DELIMITER ;
@@ -162,13 +162,23 @@ BEGIN
 END //
 DELIMITER ;
 
--- Movie ids
-DROP PROCEDURE IF EXISTS `sp_movie_init`;
+-- Mess
+DROP PROCEDURE IF EXISTS `sp_show_show`;
 DELIMITER //
-CREATE PROCEDURE `sp_movie_init`(IN `key` BINARY(16))
+CREATE PROCEDURE `sp_show_show`(IN `key` BINARY(16), IN `hx` BINARY(16))
 BEGIN
 	IF `auth_client`(`key`) = 1 THEN
-		SELECT HEX(`id`) AS `id`, `title` FROM `full_movie`;
+		SELECT HEX(`id`) AS `id`, unix_timestamp(`start`) AS `start`, unix_timestamp(`end`) AS `end`, `hall`
+        FROM `showings`
+        WHERE `start` > DATE_ADD(NOW(), INTERVAL 20 MINUTE) AND `MV_id` = (
+        SELECT `MV_id` FROM `showings` WHERE `id` = `hx`);
     END IF ;
 END //
 DELIMITER ;
+
+CALL sp_show_show(UNHEX('c7487f380e204d0a47972b0d2f244cf7'), UNHEX('EFFB9919753411ED8B3500155DF03F05'));
+
+SELECT HEX(`id`) AS `id`, unix_timestamp(`start`) AS `start`, unix_timestamp(`end`) AS `end`, `hall`
+        FROM `showings`
+        WHERE `start` > DATE_ADD(NOW(), INTERVAL 20 MINUTE) AND `MV_id` = (
+        SELECT `MV_id` FROM `showings` WHERE `id` = UNHEX('EFFB9919753411ED8B3500155DF03F05'));

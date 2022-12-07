@@ -1,0 +1,11 @@
+.seat-icon {
+  font-size: 112px;
+}
+
+.seat-free {
+  color: green;
+}
+
+.seat-occupied {
+  color: red;
+}

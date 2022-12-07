@@ -2,9 +2,11 @@ import { IonContent, IonHeader, IonImg, IonPage, IonTitle, IonToolbar, IonModal,
 IonGrid, IonRow, IonCol } from '@ionic/react';
 import { movieList, oneMovie } from '../hooks/getMovie';
 import React, { useState, useEffect, useRef } from 'react';
-import "./test.css";
+
 import MovieModal from '../components/MovieModal';
 import { OverlayEventDetail } from '@ionic/core/components';
+
+import "./test.css";
 
 const Landing = () => {
   const modal = useRef<HTMLIonModalElement>(null);

@@ -49,8 +49,16 @@ const getMovie = async (req, res) => {
   });
 };
 
+const getMovieShowsId = async (req, res) => {
+  const shows = await util('CALL sp_show_show(UNHEX(?), UNHEX(?))',
+    [process.env.DB_CUSTOMER_AUTH_KEY, req.params.show]);
+
+  return res.json({ "shows": shows});
+};
+
 export default {
   getSeats,
   getMovie,
-  getShows
+  getShows,
+  getMovieShowsId
 }

@@ -17,7 +17,7 @@ const MovieModal = (info: any) => {
   const [shows, setShows] = useState<Array<Array<IShow>>>();
 
   useEffect(() => {
-    fullShow(movie.id).then(data => setShows(data));
+    fullShow(movie.id, true).then(data => setShows(data));
   }, []);
 
   return(
@@ -104,7 +104,7 @@ const MovieModal = (info: any) => {
               shows[1].map(x => {
                 return(
                   <IonItem key={x.id} routerLink={`/show/${x.id}`}>
-                    <IonLabel>{`Sala ${x.hall}\nInicio: ${x.start}\tFin: ${x.end}`}</IonLabel>
+                    <IonLabel>{`Sala ${x.hall} Inicio: ${x.start.toString().slice(15,21)}`}</IonLabel>
                   </IonItem>
                 );
               }) : <></>}

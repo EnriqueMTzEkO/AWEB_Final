@@ -6,6 +6,9 @@ const router = express.Router();
 router.route('/show/:show')
   .get(hallController.getShows);
 
+router.route('/sh/:show')
+  .get(hallController.getMovieShowsId);
+
 router.route('/movie/:movie')
   .get(hallController.getMovie);
 

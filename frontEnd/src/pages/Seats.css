@@ -9,3 +9,33 @@
 .seat-occupied {
   color: red;
 }
+
+.seat-reserved {
+  color: yellow !important;
+}
+
+.seat-info {
+  font-size: 48px
+}
+
+.seats-info {
+  position: relative;
+  top: 35vh;
+}
+
+.buy-button {
+  width: 100%;
+}
+
+ion-img.weather-icon::part(image) {
+  display: block;
+  position: relative;
+  bottom: 16px;
+  height: 48px;
+  width: 48px;
+}
+
+ion-col.weather-col {
+  display: inline-flex;
+  max-height: 80%;
+}

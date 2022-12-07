@@ -10,8 +10,6 @@ const Chyron = () => {
     getNews().then(data => setSnippets(data));
   }, []);
 
-  console.log(snippets);
-
   if (snippets) {
     const chyronPrint = snippets.join('\t• • •\t');
     const l = chyronPrint.length;

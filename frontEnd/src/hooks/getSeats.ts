@@ -4,7 +4,7 @@ interface ISeats {
   id: string;
   row: number;
   slot: number;
-  status: number;
+  status: string;
 };
 
 export const getSeats = async (id: string) => {

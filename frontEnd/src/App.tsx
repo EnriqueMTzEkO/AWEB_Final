@@ -23,7 +23,6 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Register from './pages/Register';
 import Login from './pages/LogIn';
-import Test from './pages/test';
 import Hall from './pages/Hall';
 import Landing from './pages/Landing';
 

@@ -19,7 +19,7 @@ import { closeCircleOutline } from 'ionicons/icons';
 import { getSeats } from '../hooks/getSeats';
 import { fullShow } from '../hooks/getShow';
 import './Seats.css';
-import { getNews } from "../hooks/getNews";
+import Chyron from '../components/Chyron';
 
 interface ISeat extends RouteComponentProps<{
   id: string;
@@ -166,6 +166,7 @@ const Hall: React.FC<ISeat> = ( { match } ) => {
         </IonRow>
         </IonGrid>
     </IonContent>
+    <Chyron />
   </IonPage>
   );
 };

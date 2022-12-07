@@ -1,0 +1,10 @@
+ion-img.poster::part(image) {
+  height: 80vh;
+  width: 60vh;
+}
+
+ion-modal.info-modal::part(content) {
+  overflow: scroll;
+  --min-width: 90vw;
+  --width: 90vw;
+}

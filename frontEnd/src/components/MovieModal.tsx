@@ -1,6 +1,7 @@
 import { IonGrid, IonRow, IonCol, IonImg, IonTitle, IonList, IonItem, IonLabel } from '@ionic/react';
 import { fullShow } from '../hooks/getShow';
 import { useState, useEffect, useRef } from 'react';
+import './Modal.css';
 
 interface IShow {
   id: string;
@@ -103,7 +104,9 @@ const MovieModal = (info: any) => {
               shows ? 
               shows[1].map(x => {
                 return(
-                  <IonItem key={x.id} routerLink={`/show/${x.id}`}>
+                  <IonItem key={x.id} routerLink={`/show/${x.id}`} onClick={() => {
+                    // @ts-ignore:
+                    this.dismiss()}}>
                     <IonLabel>{`Sala ${x.hall} Inicio: ${x.start.toString().slice(15,21)}`}</IonLabel>
                   </IonItem>
                 );

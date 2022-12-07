@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import MovieModal from '../components/MovieModal';
 import { OverlayEventDetail } from '@ionic/core/components';
 
-import "./test.css";
+import Map from '../components/Map';
 
 const Landing = () => {
   const modal = useRef<HTMLIonModalElement>(null);
@@ -29,7 +29,7 @@ const Landing = () => {
 
   function onWillDismiss(ev: CustomEvent<OverlayEventDetail>) {
     setChosen('');
-  }
+  };
 
   return(
     <IonPage>
@@ -55,10 +55,10 @@ const Landing = () => {
         })}
         </IonRow>
         <IonRow>
-
+          <Map />
         </IonRow>
         </IonGrid>
-        <IonModal ref={modal} trigger="open-modal" onWillDismiss={(ev) => onWillDismiss(ev)}>
+        <IonModal ref={modal} trigger="open-modal" onWillDismiss={(ev) => onWillDismiss(ev)} className="info-modal">
           {movie ? <MovieModal info={movie}/> : <></>}
         </IonModal>
       </IonContent>

@@ -1,6 +1,7 @@
-import { IonGrid, IonRow, IonCol, IonImg, IonTitle, IonList, IonItem, IonLabel } from '@ionic/react';
+import { IonGrid, IonRow, IonCol, IonImg, IonTitle, IonList, IonItem, IonLabel, IonIcon } from '@ionic/react';
 import { fullShow } from '../hooks/getShow';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import { chevronBackOutline, chevronForwardOutline } from 'ionicons/icons';
 import './Modal.css';
 
 interface IShow {
@@ -16,10 +17,20 @@ const MovieModal = (info: any) => {
   const companies = info.info.companies;
 
   const [shows, setShows] = useState<Array<Array<IShow>>>();
+  const [index, setIndex] = useState<number>(1);
+  const [plusMinus, setButton] = useState<boolean>(false);
 
   useEffect(() => {
     fullShow(movie.id, true).then(data => setShows(data));
   }, []);
+
+  useEffect(() => {
+    if (plusMinus && shows && shows.length > index) {
+      setIndex(index + 1);
+    } else if (index > 0) {
+      setIndex(index - 1);
+    }
+  }, [plusMinus]);
 
   return(
   <IonGrid>
@@ -30,7 +41,7 @@ const MovieModal = (info: any) => {
       <IonCol size="8">
         <IonGrid>
           <IonRow>
-            <IonTitle>{movie.title}</IonTitle>
+            <IonTitle><h1>{movie.title}</h1></IonTitle>
           </IonRow>
           <IonRow>
             <IonCol>Año:</IonCol>
@@ -99,10 +110,17 @@ const MovieModal = (info: any) => {
               </IonRow>
             </IonCol>
             <IonCol size="4">
+              <IonRow>
+                <IonCol size="3">
+                  <IonIcon src={chevronBackOutline} style={{height: "100%", display: "block" }} onClick={() => setButton(false)}></IonIcon>
+                </IonCol>
+                <IonCol size="6"><h5 className='ion-text-center'>Funciones</h5></IonCol>
+                <IonCol size="3"><IonIcon src={chevronForwardOutline} style={{height: "100%", display: "block" }} onClick={() => setButton(true)}></IonIcon></IonCol>
+              </IonRow>
               <IonList>
               {
               shows ? 
-              shows[1].map(x => {
+              shows[index].map(x => {
                 return(
                   <IonItem key={x.id} routerLink={`/show/${x.id}`} onClick={() => {
                     // @ts-ignore:

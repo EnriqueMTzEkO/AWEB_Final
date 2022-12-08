@@ -9,7 +9,14 @@
  * then test the connection and on failure to change the base URL.
  */
 import axios from 'axios';
+const BASE_URL = 'http://localhost:8008';
 
 export default axios.create({
-  baseURL: 'http://localhost:8008'
+  baseURL: BASE_URL
+});
+
+export const axiosPrivate = axios.create({
+  baseURL: BASE_URL,
+  headers: { 'Content-Type': 'application/json' },
+  withCredentials: true
 });

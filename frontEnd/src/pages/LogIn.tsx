@@ -8,7 +8,11 @@ import {
   IonInput,
   IonLabel,
   IonCardSubtitle,
-  IonButton
+  IonButton,
+  IonPage,
+  IonGrid,
+  IonRow,
+  IonCol
 } from '@ionic/react';
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
@@ -72,9 +76,10 @@ const Login = () => {
   }
 
   return(
-    <IonCard>
+    <IonPage className="login-page">
+    <IonCard className="login-card">
       <IonCardHeader>
-        <IonCardTitle>Acceder</IonCardTitle>
+        <IonCardTitle className='ion-text-center' color="warning"><h1>Acceder</h1></IonCardTitle>
         <IonCardSubtitle>
           <p
           // @ts-ignore: Fuck off
@@ -115,26 +120,39 @@ const Login = () => {
             required
             ></IonInput>
           </IonItem>
-          <IonItem>
-            <IonButton
-            type="submit">
-              Acceder
-            </IonButton>
-          </IonItem>
-          <IonItem>
-            <IonButton
-            type="reset">
-              Restablecer
-            </IonButton>
-          </IonItem>
-          <IonItem>
+          <IonGrid>
+            <IonRow>
+              <IonCol size="6">
+                <IonItem>
+                  <IonButton
+                  type="submit"
+                  className='ion-margin'
+                  style={{width: "100%", height: "100%"}}>
+                    Acceder
+                  </IonButton>
+                </IonItem>
+              </IonCol>
+              <IonCol size="6">
+                <IonItem>
+                  <IonButton
+                  type="reset"
+                  className='ion-margin'
+                  style={{width: "100%", height: "100%"}}>
+                    Restablecer
+                  </IonButton>
+                </IonItem>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
             <p>¿Necesita una cuenta?</p>
+          <IonItem>
             <Link to="/register">Inscribirse</Link>
           </IonItem>
         </IonList>
         </form>
       </IonCardContent>
     </IonCard>
+    </IonPage>
   );
 };
 

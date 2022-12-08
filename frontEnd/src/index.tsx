@@ -1,6 +1,5 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import axios from './api/axios';
 import App from './App';
 import { AuthProvider } from './context/authProvider';
 

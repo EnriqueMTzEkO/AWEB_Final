@@ -113,6 +113,7 @@ const Hall: React.FC<ISeat> = ( { match } ) => {
     const item = {id: chosen[chosen.length-1], name: name, email: email, tel: phone};
     send?.push(item);
     setSend(send);
+    modal.current?.dismiss();
   }
 
   return(

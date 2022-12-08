@@ -1,14 +1,14 @@
 1. [x] Mostrar catálogo de películas, incluyendo información de la película, trailer y teaser.
 2. [x] Selección de horarios.
-3. [ ] Interfaz gráfica de selección de asientos, se definirán los asientos disponibles en verde, los rojos como reservados y los amarillos como en transacción.
-4. [ ] Mensaje de error al seleccionar asientos no disponibles.
-5. [ ] Sistema de simulación de pago.
-6. [ ] Proceso de compra, incluyendo alimentación de datos del usuario en formulario.
-7. [ ] Ingreso de los datos en base de datos.
-8. [ ] Consulta de boletos, distribución de la sala por horario, boletos por persona.
-9. [ ] Api de clima.
+3. [x] Interfaz gráfica de selección de asientos, se definirán los asientos disponibles en verde, los rojos como reservados y los amarillos como en transacción.
+4. [x] Mensaje de error al seleccionar asientos no disponibles.
+5. [x] Sistema de simulación de pago.
+6. [x] Proceso de compra, incluyendo alimentación de datos del usuario en formulario.
+7. [x] Ingreso de los datos en base de datos.
+8. [x] Consulta de boletos, distribución de la sala por horario, boletos por persona.
+9. [x] Api de clima.
 10. [x] API de noticias.
-11. [ ] API de Mapa.
+11. [x] API de Mapa.
 
 
 [Cuando en duda consulten la guía de estilos de Google.](https://google.github.io/styleguide/jsguide.html#jsdoc-method-and-function-comments)

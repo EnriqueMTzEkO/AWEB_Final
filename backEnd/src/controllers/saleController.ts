@@ -12,6 +12,34 @@ const sale = async (req: any, res: any) => {
   res.json({ message: "Success" });
 };
 
+const getTicket = async (req: any, res: any) => {
+  const { mode, id } = req.params;
+  const connection = await conn();
+  let sql: string;
+  if (mode == 0) {
+    sql = 'CALL sp_ticket_id(UNHEX(?), UNHEX(?))';
+  } else if (mode == 1) {
+    sql = 'CALL sp_ticket_user(UNHEX(?), ?)';
+  } else {
+    sql = 'CALL sp_ticket_email(UNHEX(?), ?)';
+  }
+  const results: any = await connection.query(sql, [process.env.DB_CUSTOMER_AUTH_KEY, id]);
+  const out = results[0][0];
+
+  res.json({ results: out});
+};
+
+const deleteTicket = async (req: any, res: any) => {
+  const id = req.body.selection;
+  const connection = await conn();
+  let sql = 'CALL sp_delete_ticket(UNHEX(?), UNHEX(?))';
+  const results = await connection.query(sql, [process.env.DB_CUSTOMER_AUTH_KEY, id]);
+
+  res.json({ message: "success"});
+};
+
 export default {
+  getTicket,
+  deleteTicket,
   sale
 }

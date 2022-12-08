@@ -1,4 +1,4 @@
-import { Link, Redirect, Route, Router } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import React from 'react';
@@ -25,6 +25,7 @@ import Register from './pages/Register';
 import Login from './pages/LogIn';
 import Hall from './pages/Hall';
 import Landing from './pages/Landing';
+import Cancelations from './pages/Cancelations';
 
 setupIonicReact();
 
@@ -32,16 +33,19 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route path="/landing">
+        <Route path="/landing" exact>
           <Landing />
         </Route>
         <Route path="/register">
           <Register />
         </Route>
-        <Route path="/login">
+        <Route path={`/show/:id`} component={Hall} />
+        <Route path="/cancel">
+          <Cancelations />
+        </Route>
+        <Route>
           <Login />
         </Route>
-        <Route path={`/show/:id`} component={Hall} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

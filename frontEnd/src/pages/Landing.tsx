@@ -4,9 +4,8 @@ import { movieList, oneMovie } from '../hooks/getMovie';
 import React, { useState, useEffect, useRef } from 'react';
 
 import MovieModal from '../components/MovieModal';
+import Header from '../components/Header';
 import { OverlayEventDetail } from '@ionic/core/components';
-
-import Map from '../components/Map';
 
 const Landing = () => {
   const modal = useRef<HTMLIonModalElement>(null);
@@ -33,11 +32,7 @@ const Landing = () => {
 
   return(
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Cinema</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header />
       <IonContent>
         <IonGrid>
         <IonRow id="open-modal">
@@ -55,7 +50,8 @@ const Landing = () => {
         })}
         </IonRow>
         <IonRow>
-          <Map />
+          <iframe src="http://localhost:8008/static/views/MapQuest.html" allow="geolocation" style={{width: "60vw", height: "40vh"}}>
+          </iframe>
         </IonRow>
         </IonGrid>
         <IonModal ref={modal} trigger="open-modal" onWillDismiss={(ev) => onWillDismiss(ev)} className="info-modal">

@@ -34,6 +34,7 @@ server.use('/user', require('./src/routes/userRoutes'));
 server.use('/logout', require('./src/routes/logout'));
 server.use('/resources', require('./src/routes/hallRoute'));
 server.use('/admin', require('./src/routes/adminRoutes'));
+server.use('/ticket', require('./src/routes/ticketRoute'));
 
 // I'll verify these later
 server.use('/movies', require('./src/routes/moviesRoute'));

@@ -1,24 +1,56 @@
 import {
-  IonCol, IonRow, IonIcon, IonGrid, IonButton
+  IonCol, IonRow, IonIcon, IonGrid, IonButton, useIonAlert
 } from '@ionic/react';
 import axios from '../api/axios';
 import { useHistory } from "react-router";
+import './info.css';
 
 const SeatInfo = (seats: any) => {
   const history = useHistory();
+  const [presentAlert] = useIonAlert();
 
   const sale = async (ev: any) => {
-    console.log(seats.seats);
-    try {
-      const t = await axios.post('/resources/sale',
-      JSON.stringify(seats.seats),
-      {
-        headers: { 'Content-type': 'application/json' },
-        withCredentials: true
+    if (seats.seats.length > 0) {
+      try {
+        const t = await axios.post('/resources/sale',
+        JSON.stringify(seats.seats),
+        {
+          headers: { 'Content-type': 'application/json' },
+          withCredentials: true
+        });
+        // @ts-ignore
+        const bought = seats.seats.map(el => { return el.id;}).join("\n");
+  
+        presentAlert({
+          header: "Correcto",
+          subHeader: "Compra completa",
+          cssClass: "success-alert",
+          message: `Ha comprado los boletos con IDs de ${bought}`,
+          buttons: [
+            {
+              text: 'OK',
+              role: 'confirm',
+              handler: () => history.push(`/landing`)
+            }
+          ]
+        });
+  
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      presentAlert({
+        header: "Error",
+        subHeader: "Carrito Vacío",
+        cssClass: "error-alert",
+        message: `Por favor seleccione los asientos antes de dar click en comprar`,
+        buttons: [
+          {
+            text: 'OK',
+            role: 'confirm'
+          }
+        ]
       });
-      history.push(`/landing`);
-    } catch (err) {
-      console.log(err);
     }
   };
 

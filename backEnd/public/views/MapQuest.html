@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MapQuest</title>
+  <!-- FNZY87wL9pwlal2lATQH5i0tGf1EukzB -->
+  <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+</head>
+<body>
+  <div id="map" style="width: 100vw; height: 100vh; will-change:auto !important;"></div>
+  <script type="text/javascript">
+    const drawMap = (geo) => {
+    L.mapquest.key = 'FNZY87wL9pwlal2lATQH5i0tGf1EukzB';
+
+    var map = L.mapquest.map('map', {
+      center: [21.841412937109432, -102.35441215690126],
+      layers: L.mapquest.tileLayer('map'),
+      zoom: 19
+    });
+
+    L.mapquest.directions().route({
+      start: [geo.coords.latitude, geo.coords.longitude],
+      end: [21.841412937109432, -102.35441215690126]
+    });
+  };
+
+  navigator.geolocation.getCurrentPosition(drawMap);
+  </script>
+</body>
+</html>

@@ -190,3 +190,44 @@ BEGIN
     END IF ;
 END //
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `sp_ticket_id`;
+DELIMITER //
+CREATE PROCEDURE `sp_ticket_id`(IN `key` BINARY(16), IN `hx` BINARY(16))
+BEGIN
+	IF `auth_client`(`key`) = 1 THEN
+		SELECT * FROM `ticket` WHERE `id` = HEX(`hx`);
+    END IF ;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `sp_ticket_user`;
+DELIMITER //
+CREATE PROCEDURE `sp_ticket_user`(IN `key` BINARY(16), IN `hx` VARCHAR(16))
+BEGIN
+	IF `auth_client`(`key`) = 1 THEN
+		SELECT * FROM `ticket` WHERE `username` = `hx` AND `username` <> 'emptyUser';
+    END IF ;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `sp_ticket_email`;
+DELIMITER //
+CREATE PROCEDURE `sp_ticket_email`(IN `key` BINARY(16), IN `hx` VARCHAR(64))
+BEGIN
+	IF `auth_client`(`key`) = 1 THEN
+		SELECT * FROM `ticket` WHERE `email` = `hx`;
+    END IF ;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `sp_delete_ticket`;
+DELIMITER //
+CREATE PROCEDURE `sp_delete_ticket`(IN `key` BINARY(16), IN `hx` BINARY(16))
+BEGIN
+	IF `auth_client`(`key`) = 1 THEN
+		UPDATE `seats` SET `status` = false WHERE `id` = (SELECT `ST_id` FROM `sales` WHERE `id` = `hx`);
+		DELETE FROM `sales` WHERE `id` = `hx`;
+    END IF ;
+END //
+DELIMITER ;

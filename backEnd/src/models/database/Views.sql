@@ -33,3 +33,11 @@ SELECT `mv`.`title`, `cy`.`name`, `chr`.`role`
 FROM `COMPANY_HAS_ROLE` AS `chr`
 INNER JOIN `COMPANIES` AS `cy` ON `chr`.`CY_id` = `cy`.`id`
 INNER JOIN `MOVIES` AS `mv` ON `chr`.`MV_id` = `mv`.`id`;
+
+DROP VIEW IF EXISTS `ticket`;
+CREATE VIEW `ticket` AS
+SELECT HEX(`sl`.`id`) AS `id`, `sl`.`price`, `mv`.`title`, `sh`.`start`, `sh`.`end`, `us`.`username`, `us`.`email`
+FROM `sales` AS `sl`
+LEFT JOIN `users` AS `us` ON `sl`.`US_id` = `us`.`id`
+LEFT JOIN `showings` AS `sh` ON `sl`.`SH_id` = `sh`.`id`
+LEFT JOIN `movies` AS `mv` ON `sh`.`MV_id` = `mv`.`id`;

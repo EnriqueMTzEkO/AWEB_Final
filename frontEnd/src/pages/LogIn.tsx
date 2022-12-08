@@ -10,8 +10,8 @@ import {
   IonCardSubtitle,
   IonButton
 } from '@ionic/react';
-import React, { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../context/authProvider';
+import { useRef, useState, useEffect } from 'react';
+import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import axios from '../api/axios';
 
@@ -19,7 +19,7 @@ const LOGIN_URL = '/user/login';
 
 const Login = () => {
   // @ts-ignore: idk
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
   const userRef = useRef();
   const errRef = useRef();
 

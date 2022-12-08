@@ -176,9 +176,17 @@ BEGIN
 END //
 DELIMITER ;
 
-CALL sp_show_show(UNHEX('c7487f380e204d0a47972b0d2f244cf7'), UNHEX('EFFB9919753411ED8B3500155DF03F05'));
-
-SELECT HEX(`id`) AS `id`, unix_timestamp(`start`) AS `start`, unix_timestamp(`end`) AS `end`, `hall`
-        FROM `showings`
-        WHERE `start` > DATE_ADD(NOW(), INTERVAL 20 MINUTE) AND `MV_id` = (
-        SELECT `MV_id` FROM `showings` WHERE `id` = UNHEX('EFFB9919753411ED8B3500155DF03F05'));
+-- Saleseats
+DROP PROCEDURE IF EXISTS `sp_sale`;
+DELIMITER //
+CREATE PROCEDURE `sp_sale`(IN `key` BINARY(16), IN `hx` BINARY(16), IN `nm` VARCHAR(16), IN `em` VARCHAR(64), IN `tel` VARCHAR(16))
+BEGIN
+	IF `auth_client`(`key`) = 1 THEN
+		IF ((SELECT COUNT(*) FROM `users` WHERE `email` = `em`) = 0) THEN
+			INSERT INTO `users` VALUES(guuid(), 'emptyUser', 'emptyPassword', `em`, 8, 0, null, `tel`);
+        END IF ;
+        INSERT INTO `sales` VALUES(guuid(), (SELECT `id` FROM `users` WHERE `email` = `em`), (SELECT `SH_id` FROM `seats` WHERE `id` = `hx`), `hx`, 85, NOW(), 1);
+        UPDATE `seats` SET `status` = true WHERE `id` = `hx`;
+    END IF ;
+END //
+DELIMITER ;

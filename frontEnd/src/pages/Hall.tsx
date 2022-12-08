@@ -63,6 +63,7 @@ const Hall: React.FC<ISeat> = ( { match } ) => {
   const [phone, setPhone] = useState(0);
 
   const [newSeats, setNewSeats] = useState(false);
+  const [send, setSend] = useState<Array<{id:string, name:string, email: string, tel:number}>>([]);
 
   useEffect(() => {
     getSeats(match.params.id).then((data) => setSeats(data));
@@ -103,7 +104,6 @@ const Hall: React.FC<ISeat> = ( { match } ) => {
 
   const history = useHistory();
   const handleSelect = (value: any) => {
-    console.log(value);
     setCurrentShow(value);
     history.push(`/show/${currentShow?.id}`);
   };
@@ -111,7 +111,8 @@ const Hall: React.FC<ISeat> = ( { match } ) => {
   const handleSubmit = (ev: any) => {
     ev.preventDefault();
     const item = {id: chosen[chosen.length-1], name: name, email: email, tel: phone};
-    console.log(item);
+    send?.push(item);
+    setSend(send);
   }
 
   return(
@@ -186,8 +187,7 @@ const Hall: React.FC<ISeat> = ( { match } ) => {
           </IonCol>
           <IonCol size="2">
             <SeatInfo
-            // @ts-ignore:
-            buy={chosen}/>
+            seats={send}/>
           </IonCol>
           <IonCol size="5">
           {

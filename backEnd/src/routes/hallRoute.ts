@@ -1,5 +1,6 @@
 import express from 'express';
 import hallController from '../controllers/hallController';
+import saleController from '../controllers/saleController';
 
 const router = express.Router();
 
@@ -14,5 +15,8 @@ router.route('/movie/:movie')
 
 router.route('/show/seat/:show')
   .get(hallController.getSeats);
+
+router.route('/sale')
+  .post(saleController.sale);
 
 module.exports = router;

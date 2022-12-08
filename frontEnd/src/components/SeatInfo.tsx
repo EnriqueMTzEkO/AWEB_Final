@@ -1,53 +1,24 @@
 import {
-  IonCol, IonRow, IonIcon, IonGrid, IonButton, IonModal, IonLabel, IonInput, IonText, IonItem, IonList
+  IonCol, IonRow, IonIcon, IonGrid, IonButton
 } from '@ionic/react';
-import { useEffect, useState, useRef } from 'react';
+import axios from '../api/axios';
+import { useHistory } from "react-router";
 
-interface ISaleInput {
-  name: string,
-  email: string,
-  phone: string
-}
+const SeatInfo = (seats: any) => {
+  const history = useHistory();
 
-const SeatInfo = (buy: any) => {
-  const modal = useRef<HTMLIonModalElement>(null);
-  const [names, setNames] = useState<Array<string>>();
-  const [emails, setEmail] = useState<Array<string>>();
-  const [phones, setPhone] = useState<Array<number>>();
-
-  useEffect(() => {
-    // @ts-ignore
-    const v1: Array<string> = Array.from({length: buy.buy.length}, () => []);
-    // @ts-ignore
-    const v2: Array<string> = Array.from({length: buy.buy.length}, () => []);
-    // @ts-ignore
-    const v3: Array<string> = Array.from({length: buy.buy.length}, () => []);
-  }, [buy.buy]);
-
-  const sale = (ev: any) => {
-    ev.preventDefault();
-    const saleInfo = { names: names, emails: emails, phones: phones};
-    console.log(saleInfo);
-  };
-
-  const addName = (value: string, index: number) => {
-    if (names) {
-      names[index] = value;
-      setNames(names);
-    }
-  };
-
-  const addEmail = (value: string, index: number) => {
-    if (emails) {
-      emails[index] = value;
-      setEmail(emails);
-    }
-  };
-
-  const addTel = (value: number, index: number) => {
-    if (phones) {
-      phones[index] = value;
-      setPhone(phones);
+  const sale = async (ev: any) => {
+    console.log(seats.seats);
+    try {
+      const t = await axios.post('/resources/sale',
+      JSON.stringify(seats.seats),
+      {
+        headers: { 'Content-type': 'application/json' },
+        withCredentials: true
+      });
+      history.push(`/landing`);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -84,41 +55,11 @@ const SeatInfo = (buy: any) => {
         <IonButton
           className="buy-button"
           color="dark"
-          id="sale-modal">
+          id="sale-modal"
+          onClick={sale}>
           Comprar Boletos
         </IonButton>
       </IonRow>
-      <IonModal ref={modal} trigger="sale-modal" className="sale-modal">
-        <form onSubmit={sale}>
-          <IonList>
-        {
-          buy.buy.length > 0 ?
-          // @ts-ignore
-          buy.buy.map((x, i: number) => {
-            return(
-              <IonItem key={i}>
-                <IonLabel>Nombre:</IonLabel>
-                {// @ts-ignore
-                  <IonInput type="text" value="" onIonChange={(ev) => addName(ev.target.value, i)} required={true}></IonInput>}
-                <IonLabel>Email:</IonLabel>
-                {// @ts-ignore
-                <IonInput type="email" value="" onIonChange={(ev) => addEmail(ev.target.value, i)} required={true}></IonInput>}
-                <IonLabel>Teléfono:</IonLabel>
-                {// @ts-ignore
-                <IonInput type="tel" value="" onIonChange={(ev) => addTel(ev.target.value, i)} required={true}></IonInput>}
-              </IonItem>
-            );
-          }) : <IonText>Elija sus asientos primero</IonText>
-        }
-        {
-          buy.buy.length > 0 ?
-          <IonButton>
-            Comprar Boletos
-          </IonButton> : <></>
-        }
-        </IonList>
-        </form>
-      </IonModal>
     </IonGrid>
   );
 };
